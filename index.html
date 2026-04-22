@@ -1108,9 +1108,8 @@ async function forgotPassword() {
     showAuthMsg('Enter your email above first.');
     return;
   }
-
   try {
-    const { error } = await window.sb.from(.resetPasswordForEmail(email);
+    const { error } = await window.sb.auth.resetPasswordForEmail(email);
     if (error) throw error;
     showAuthMsg('Password reset email sent.', 'success');
   } catch (err) {
