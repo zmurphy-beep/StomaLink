@@ -801,8 +801,17 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
   <div class="toast" id="toast-el"></div>
 </div>
 
-<script src="/auth.bundle.js"></script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  const SUPABASE_URL = "PASTE_YOUR_URL_HERE";
+  const SUPABASE_ANON_KEY = "PASTE_YOUR_KEY_HERE";
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
 var VERSES=[
   {text:'"I can do all things through Christ who strengthens me."',ref:'Philippians 4:13'},
   {text:'"The Lord is my shepherd; I shall not want."',ref:'Psalm 23:1'},
