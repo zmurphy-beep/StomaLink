@@ -1103,20 +1103,6 @@ function showAuthMsg(msg,kind){
 function clearAuthMsg(){
   var el=document.getElementById('auth-msg');el.style.display='none';el.textContent='';
 }
-function handleAuthError(err){
-  if(!window.StomaAuth){showAuthMsg('Authentication is not available right now.');return;}
-  if(err&&window.StomaAuth.MissingIdentityError&&err instanceof window.StomaAuth.MissingIdentityError){
-    showAuthMsg('Identity is not enabled yet. If you just deployed, it may take a moment to activate.');return;
-  }
-  if(err&&window.StomaAuth.AuthError&&err instanceof window.StomaAuth.AuthError){
-    if(err.status===401){showAuthMsg('Invalid email or password.');return;}
-    if(err.status===403){showAuthMsg('Signups are not allowed right now. Ask the admin for an invite.');return;}
-    if(err.status===422){showAuthMsg('Check your email format and use a password of at least 8 characters.');return;}
-    if(err.status===400){showAuthMsg(err.message||'That request could not be processed.');return;}
-    showAuthMsg(err.message||'Something went wrong. Please try again.');return;
-  }
-  showAuthMsg((err&&err.message)||'Network error. Please try again.');
-}
 
 
 function onUserSignedOut() {
