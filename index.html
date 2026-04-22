@@ -1146,17 +1146,6 @@ function onUserSignedIn(user){
 
 
 
-function onUserSignedOut() {
-  CURRENT_USER = null;
-  PROFILE = emptyProfile();
-  USER_POSTS = [];
-  POSTS_API = [];
-  USER_CACHE = {};
-  USER_PENDING = {};
-  POSTS = POSTS_SEED.slice();
-  showAuthScreen();
-  renderFeed(null);
-}
 
 
 
