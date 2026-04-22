@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="StomaLink"/>
+<meta name="description" content="StomaLink — A faith-based community for ostomy patients. Tips, stories, prayer, and support."/>
+<meta name="theme-color" content="#2C1F0E"/>
+<!-- Open Graph / Social sharing -->
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="StomaLink — Community, Faith & Strength"/>
+<meta property="og:description" content="A faith-based community for ostomy patients. Tips, stories, prayer, and support."/>
+<meta property="og:image" content="/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<title>StomaLink</title>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lora:ital,wght@1,500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C1F0E;overflow:hidden;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{display:none;}
+:root{
+  --cream:#FAF7F2;
+  --warm:#F2EDE4;
+  --stone:#E8E0D4;
+  --bark:#8B7355;
+  --earth:#5C4A32;
+  --deep:#2C1F0E;
+  --sage:#6B8F71;
+  --rust:#C4552A;
+  --gold:#D4A843;
+  --sky:#4A7FA5;
+  --purple:#8B5CF6;
+  --teal:#5DADA0;
+}
+#app{max-width:430px;margin:0 auto;height:100dvh;background:var(--cream);display:flex;flex-direction:column;overflow:hidden;position:relative;}
+
+/* SPLASH */
+#splash{position:absolute;inset:0;background:var(--deep);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:999;transition:opacity 0.5s ease;}
+#splash.gone{opacity:0;pointer-events:none;}
+.splash-mark{font-size:38px;font-weight:700;letter-spacing:-1px;color:var(--cream);}
+.splash-mark span{color:var(--gold);}
+.splash-sub{font-size:13px;color:rgba(212,168,67,0.7);letter-spacing:2px;text-transform:uppercase;}
+
+/* TOPBAR */
+.topbar{background:var(--deep);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.wordmark{font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--cream);}
+.wordmark span{color:var(--gold);}
+.topbar-right{display:flex;gap:8px;}
+.icon-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.06);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,255,255,0.65);transition:background 0.15s;}
+.icon-pill:active{background:rgba(255,255,255,0.15);}
+
+/* PAGES */
+#pages{flex:1;overflow:hidden;position:relative;}
+.page{display:none;position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;flex-direction:column;}
+.page.active{display:flex;}
+
+/* BOTTOM NAV */
+.bottomnav{background:var(--cream);border-top:1px solid var(--stone);padding:10px 8px 22px;display:flex;flex-shrink:0;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-family:'Sora',sans-serif;padding:4px 2px;}
+.nav-item svg{width:22px;height:22px;color:#C4B8A8;transition:color 0.15s;}
+.nav-label{font-size:9px;font-weight:600;letter-spacing:0.5px;color:#C4B8A8;text-transform:uppercase;transition:color 0.15s;}
+.nav-item.active svg,.nav-item.active .nav-label{color:var(--earth);}
+.nav-center{background:var(--deep);border-radius:16px;padding:8px 6px 6px;margin:-6px 4px 0;}
+.nav-center svg{color:var(--cream)!important;}
+.nav-center .nav-label{color:var(--gold)!important;}
+
+/* DAILY HERO */
+.daily-hero{background:var(--deep);padding:24px 20px 20px;flex-shrink:0;}
+.daily-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.daily-eyebrow::after{content:'';flex:1;height:1px;background:rgba(212,168,67,0.25);}
+.daily-verse{font-family:'Lora',serif;font-style:italic;font-size:16px;line-height:1.75;color:#E8D5BC;margin-bottom:8px;}
+.daily-ref{font-size:11px;font-weight:600;color:var(--gold);letter-spacing:0.5px;}
+.daily-prayer{background:rgba(255,255,255,0.05);border-left:2px solid rgba(212,168,67,0.5);padding:12px 14px;margin-top:18px;border-radius:0 10px 10px 0;}
+.prayer-label{font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(212,168,67,0.8);text-transform:uppercase;margin-bottom:7px;}
+.prayer-text{font-size:13px;line-height:1.7;color:rgba(255,255,255,0.55);}
+
+/* SECTION HEADER */
+.sec-hdr{padding:18px 20px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.sec-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);}
+.sec-action{font-size:12px;color:var(--sky);font-weight:500;background:none;border:none;cursor:pointer;font-family:'Sora',sans-serif;}
+
+/* STORIES */
+.stories-row{padding:2px 20px 16px;display:flex;gap:12px;overflow-x:auto;flex-shrink:0;}
+.story-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;cursor:pointer;}
+.story-ring{width:54px;height:54px;border-radius:50%;padding:2.5px;background:var(--stone);}
+.story-ring.live{background:linear-gradient(135deg,var(--rust),var(--gold));}
+.story-face{width:100%;height:100%;border-radius:50%;background:var(--warm);border:2.5px solid var(--cream);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--earth);}
+.story-name{font-size:10px;color:var(--bark);max-width:54px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* FEED */
+.feed-wrap{padding:0 16px 20px;flex:1;}
+.post-card{background:#fff;border-radius:20px;margin-bottom:12px;overflow:hidden;border:1px solid var(--stone);}
+.post-hdr{display:flex;align-items:center;gap:10px;padding:14px 16px 10px;}
+.post-av{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.av-earth{background:#EDE0CC;color:var(--earth);}
+.av-sage{background:#DCE8DC;color:#2A5A2A;}
+.av-rust{background:#F5DDD5;color:#8B3520;}
+.av-sky{background:#D5E5F0;color:#1A3A5A;}
+.av-gold{background:#F5EAD0;color:#5A3A0A;}
+.av-purple{background:#EDD5F5;color:#4A1A7A;}
+.av-teal{background:#D5EDE8;color:#1A4A3A;}
+.av-deep{background:var(--deep);color:var(--gold);font-size:10px;}
+.post-meta{flex:1;}
+.post-name{font-size:13px;font-weight:600;color:var(--deep);}
+.post-time-line{font-size:11px;color:var(--bark);margin-top:2px;}
+.type-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.pip-faith{background:var(--gold);}
+.pip-tip{background:var(--sage);}
+.pip-product{background:var(--rust);}
+.pip-article{background:var(--sky);}
+.pip-story{background:var(--purple);}
+.pip-question{background:var(--teal);}
+
+.post-tag{display:inline-flex;align-items:center;gap:5px;margin:0 16px 8px;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;}
+.ptag-faith{background:#FDF3DC;color:#7A5A1A;}
+.ptag-tip{background:#DCE8DC;color:#2A5A2A;}
+.ptag-product{background:#F5DDD5;color:#7A2A1A;}
+.ptag-article{background:#D5E5F0;color:#1A3A5A;}
+.ptag-story{background:#EDD5F5;color:#4A1A7A;}
+.ptag-question{background:#D5EDE8;color:#1A4A3A;}
+
+.post-body{padding:0 16px 12px;font-size:14px;line-height:1.7;color:var(--deep);white-space:pre-line;}
+.post-link{display:block;margin:0 16px 12px;background:var(--warm);border-radius:12px;padding:12px 14px;text-decoration:none;border:1px solid var(--stone);}
+.post-link-title{font-size:13px;font-weight:600;color:var(--sky);}
+.post-link-url{font-size:11px;color:var(--bark);margin-top:3px;}
+.post-actions{display:flex;align-items:center;padding:10px 10px;border-top:1px solid var(--warm);}
+.act{display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;font-size:12px;font-weight:500;color:var(--bark);padding:6px 8px;border-radius:8px;font-family:'Sora',sans-serif;transition:color 0.15s;}
+.act svg{width:16px;height:16px;}
+.act.liked{color:var(--rust);}
+.act.liked svg{fill:var(--rust);stroke:var(--rust);}
+.act-spacer{flex:1;}
+
+/* COMPOSE BAR */
+.compose-bar{background:var(--cream);border-top:1px solid var(--stone);padding:10px 16px 12px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.c-dot{width:34px;height:34px;border-radius:10px;background:var(--warm);border:1px solid var(--stone);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--earth);flex-shrink:0;}
+.c-pill{flex:1;background:#fff;border:1px solid var(--stone);border-radius:20px;padding:10px 16px;font-size:14px;color:var(--bark);cursor:pointer;display:flex;align-items:center;justify-content:space-between;}
+
+/* EXPLORE */
+.ex-search-wrap{padding:14px 16px 10px;background:var(--cream);flex-shrink:0;}
+.ex-input{width:100%;background:#fff;border:1px solid var(--stone);border-radius:20px;padding:11px 16px 11px 38px;font-size:14px;font-family:'Sora',sans-serif;color:var(--deep);outline:none;}
+.ex-search-icon-wrap{position:relative;}
+.ex-search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--bark);width:16px;height:16px;pointer-events:none;}
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:4px 16px 20px;}
+.ex-tile{border-radius:18px;padding:20px 16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;min-height:120px;transition:transform 0.15s;}
+.ex-tile:active{transform:scale(0.97);}
+.ex-tile svg{width:26px;height:26px;}
+.ex-tile-label{font-size:14px;font-weight:700;}
+.ex-tile-sub{font-size:12px;opacity:0.7;}
+.tile-faith{background:var(--deep);}
+.tile-tip{background:#EAF0E8;}
+.tile-product{background:#F8EAE4;}
+.tile-article{background:#E4EEF5;}
+.tile-story{background:#F0E8F5;}
+.tile-question{background:#E4F3F0;}
+
+/* SUPPORT */
+.sup-hero{background:var(--deep);padding:32px 20px 28px;text-align:center;flex-shrink:0;}
+.sup-hero h2{font-family:'Lora',serif;font-style:italic;font-size:26px;color:var(--cream);margin-bottom:10px;line-height:1.3;}
+.sup-hero p{font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7;}
+.sup-body{padding:24px 16px 40px;}
+.flabel{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--bark);text-transform:uppercase;display:block;margin-bottom:7px;}
+.finput,.fselect,.ftextarea{width:100%;background:#fff;border:1px solid var(--stone);border-radius:12px;padding:13px 14px;font-size:15px;font-family:'Sora',sans-serif;color:var(--deep);outline:none;margin-bottom:16px;display:block;-webkit-appearance:none;transition:border-color 0.15s;}
+.finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(--bark);}
+.ftextarea{height:110px;resize:none;line-height:1.6;}
+.btn-primary{width:100%;padding:15px;background:var(--deep);color:var(--cream);border:none;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;transition:background 0.15s;}
+.btn-primary:active{background:var(--earth);}
+.sup-note{font-size:12px;color:var(--bark);text-align:center;margin-top:12px;line-height:1.6;}
+#sup-success{display:none;background:var(--warm);border:1px solid var(--stone);border-radius:18px;padding:32px 20px;text-align:center;}
+#sup-success h3{font-size:20px;font-weight:700;color:var(--deep);margin-bottom:10px;}
+#sup-success p{font-size:14px;color:var(--earth);line-height:1.7;}
+
+/* PROFILE */
+.prof-header{background:var(--deep);padding:28px 20px 24px;text-align:center;flex-shrink:0;}
+.prof-av-ring{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,var(--rust),var(--gold));padding:3px;margin:0 auto 14px;}
+.prof-av-inner{width:100%;height:100%;border-radius:50%;background:var(--deep);border:3px solid var(--deep);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--gold);}
+.prof-name-text{font-size:20px;font-weight:700;color:var(--cream);}
+.prof-sub-text{font-size:13px;color:rgba(255,255,255,0.45);margin-top:4px;}
+.prof-stats{display:flex;margin-top:20px;border-top:1px solid rgba(255,255,255,0.08);padding-top:18px;}
+.stat{flex:1;text-align:center;}.stat+.stat{border-left:1px solid rgba(255,255,255,0.08);}
+.stat-n{font-size:22px;font-weight:700;color:var(--cream);}
+.stat-l{font-size:10px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-top:2px;}
+.prof-body{padding:20px 16px;}
+.psec-title{font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--bark);text-transform:uppercase;margin-bottom:12px;}
+.settings-group{border-radius:16px;overflow:hidden;border:1px solid var(--stone);margin-bottom:20px;background:#fff;}
+.settings-row{display:flex;align-items:center;gap:12px;padding:15px 16px;border-bottom:1px solid var(--warm);cursor:pointer;transition:background 0.15s;}
+.settings-row:last-child{border-bottom:none;}
+.settings-row:active{background:var(--warm);}
+.row-icon{width:32px;height:32px;border-radius:10px;background:var(--warm);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.row-icon svg{width:16px;height:16px;color:var(--earth);}
+.row-label{flex:1;font-size:14px;font-weight:500;color:var(--deep);}
+.row-arrow{color:var(--stone);}
+.prof-footer{font-size:12px;color:var(--bark);text-align:center;line-height:1.8;padding:8px 0 32px;}
+
+/* MODAL */
+.modal-bg{display:none;position:absolute;inset:0;background:rgba(44,31,14,0.6);z-index:200;align-items:flex-end;}
+.modal-bg.open{display:flex;}
+.modal-sheet{background:var(--cream);border-radius:28px 28px 0 0;padding:8px 20px 36px;width:100%;max-height:90vh;overflow-y:auto;}
+.modal-handle{width:36px;height:4px;background:var(--stone);border-radius:2px;margin:12px auto 18px;}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.modal-title{font-size:18px;font-weight:700;color:var(--deep);}
+.modal-close{background:var(--warm);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--earth);}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.type-chip{padding:12px;border-radius:12px;border:1.5px solid var(--stone);background:#fff;font-size:13px;font-weight:600;cursor:pointer;text-align:center;color:var(--bark);font-family:'Sora',sans-serif;transition:all 0.15s;}
+.type-chip.sel{border-color:var(--earth);background:var(--warm);color:var(--earth);}
+.compose-ta{width:100%;background:#fff;border:1px solid var(--stone);border-radius:12px;padding:13px 14px;font-size:15px;font-family:'Sora',sans-serif;color:var(--deep);outline:none;height:120px;resize:none;line-height:1.6;margin-bottom:16px;display:block;}
+.compose-ta:focus{border-color:var(--bark);}
+.modal-actions{display:flex;gap:10px;}
+.btn-cancel{flex:1;padding:14px;border:1.5px solid var(--stone);border-radius:14px;background:none;font-size:15px;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;color:var(--bark);}
+.btn-post{flex:2;padding:14px;background:var(--deep);color:var(--cream);border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Sora',sans-serif;}
+.btn-post:active{background:var(--earth);}
+
+/* COMMENTS */
+.comment-item{display:flex;gap:10px;margin-bottom:14px;}
+.comment-av{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.comment-bubble{background:#fff;border-radius:0 14px 14px 14px;padding:10px 13px;flex:1;border:1px solid var(--stone);}
+.comment-user{font-size:12px;font-weight:700;color:var(--deep);margin-bottom:3px;}
+.comment-text{font-size:13px;color:var(--earth);line-height:1.55;}
+.comment-meta{font-size:10px;color:var(--bark);font-weight:400;margin-left:6px;}
+.comment-row{display:flex;gap:10px;align-items:center;border-top:1px solid var(--stone);padding-top:14px;margin-top:4px;}
+.comment-input{flex:1;background:#fff;border:1px solid var(--stone);border-radius:20px;padding:11px 14px;font-size:14px;font-family:'Sora',sans-serif;outline:none;color:var(--deep);}
+.comment-send{background:var(--deep);border:none;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:var(--cream);}
+
+/* TOAST */
+.toast{position:absolute;bottom:96px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--deep);color:var(--cream);font-size:13px;font-weight:500;padding:11px 20px;border-radius:24px;opacity:0;transition:all 0.25s;pointer-events:none;white-space:nowrap;z-index:500;border:1px solid rgba(212,168,67,0.2);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* FILTER BAR */
+.filter-bar{background:var(--cream);border-bottom:1px solid var(--stone);padding:10px 16px;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.filter-tag{display:inline-flex;align-items:center;gap:6px;background:var(--warm);border:1px solid var(--stone);color:var(--earth);font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;}
+.filter-tag button{background:none;border:none;cursor:pointer;color:var(--bark);font-size:18px;line-height:1;padding:0;display:flex;align-items:center;}
+
+/* WELCOME BANNER */
+.welcome-banner{background:linear-gradient(135deg,rgba(212,168,67,0.12),rgba(91,173,160,0.08));border:1px solid rgba(212,168,67,0.2);border-radius:16px;padding:14px 16px;margin:0 16px 12px;display:flex;align-items:flex-start;gap:12px;}
+.welcome-banner-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
+.welcome-banner-text{font-size:13px;line-height:1.6;color:var(--earth);}
+.welcome-banner-title{font-size:14px;font-weight:700;color:var(--deep);margin-bottom:3px;}
+
+/* PROFILE v2 — cover/avatar/bio/tabs */
+.prof-cover{position:relative;height:150px;background:linear-gradient(135deg,var(--earth),var(--deep));background-size:cover;background-position:center;flex-shrink:0;}
+.prof-cover-edit{position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.18);border-radius:20px;padding:7px 12px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--cream);cursor:pointer;font-family:'Sora',sans-serif;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.prof-cover-edit svg{width:14px;height:14px;}
+.prof-cover-edit:active{background:rgba(0,0,0,0.65);}
+.prof-ident{background:#fff;padding:0 20px 18px;flex-shrink:0;border-bottom:1px solid var(--stone);}
+.prof-av-wrap{position:relative;margin-top:-48px;width:98px;height:98px;}
+.prof-av-big{width:98px;height:98px;border-radius:50%;border:4px solid #fff;background:linear-gradient(135deg,var(--rust),var(--gold));display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;color:#fff;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;box-shadow:0 2px 8px rgba(44,31,14,0.08);}
+.prof-av-big.has-image{background-color:#fff;}
+.prof-av-big.has-image span{display:none;}
+.prof-av-cam{position:absolute;bottom:2px;right:2px;width:30px;height:30px;border-radius:50%;background:var(--deep);border:2px solid #fff;display:flex;align-items:center;justify-content:center;color:var(--gold);cursor:pointer;}
+.prof-av-cam svg{width:13px;height:13px;}
+.prof-av-cam:active{background:var(--earth);}
+.prof-ident-meta{padding-top:12px;}
+.prof-name-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+.prof-name-big{font-size:22px;font-weight:700;color:var(--deep);letter-spacing:-0.3px;}
+.prof-handle{font-size:13px;color:var(--bark);font-weight:500;}
+.prof-headline{font-size:13px;color:var(--earth);margin-top:3px;font-weight:500;}
+.prof-bio{font-size:14px;color:var(--earth);line-height:1.6;margin-top:10px;white-space:pre-line;}
+.prof-meta-row{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;}
+.prof-meta-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--bark);}
+.prof-meta-item svg{width:13px;height:13px;}
+.prof-stats-new{display:flex;gap:24px;margin-top:14px;padding-top:14px;border-top:1px solid var(--warm);}
+.prof-stats-new .pstat{display:flex;align-items:baseline;gap:6px;cursor:default;}
+.prof-stats-new .pstat-n{font-size:15px;font-weight:700;color:var(--deep);}
+.prof-stats-new .pstat-l{font-size:13px;color:var(--bark);}
+.prof-actions{display:flex;gap:8px;margin-top:16px;}
+.prof-btn{flex:1;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;border:1px solid var(--stone);background:#fff;color:var(--deep);}
+.prof-btn svg{width:14px;height:14px;}
+.prof-btn:active{background:var(--warm);}
+.prof-btn-primary{background:var(--deep);color:var(--cream);border-color:var(--deep);}
+.prof-btn-primary:active{background:var(--earth);}
+
+/* PROFILE TABS */
+.prof-tabs{display:flex;background:#fff;border-bottom:1px solid var(--stone);flex-shrink:0;}
+.prof-tab{flex:1;padding:14px 8px;background:none;border:none;cursor:pointer;font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--bark);position:relative;display:flex;align-items:center;justify-content:center;gap:6px;}
+.prof-tab svg{width:14px;height:14px;}
+.prof-tab.active{color:var(--deep);}
+.prof-tab.active::after{content:'';position:absolute;bottom:-1px;left:18%;right:18%;height:2px;background:var(--deep);border-radius:2px;}
+.prof-tab-content{display:block;}
+
+/* PHOTO GRID */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--warm);}
+.photo-grid-item{aspect-ratio:1;background:var(--stone);background-size:cover;background-position:center;cursor:pointer;position:relative;}
+.photo-grid-item:active{opacity:0.82;}
+
+/* EMPTY TAB STATE */
+.empty-tab{text-align:center;padding:44px 28px;color:var(--bark);background:#fff;}
+.empty-tab .empty-icon{width:62px;height:62px;border-radius:50%;background:var(--warm);border:1px dashed var(--stone);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;}
+.empty-tab .empty-icon svg{width:26px;height:26px;color:var(--bark);}
+.empty-tab h4{font-size:16px;font-weight:700;color:var(--deep);margin-bottom:6px;}
+.empty-tab p{font-size:13px;line-height:1.6;max-width:260px;margin:0 auto;}
+
+/* ABOUT CARDS */
+.about-wrap{padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--cream);}
+.about-card{background:#fff;border:1px solid var(--stone);border-radius:14px;padding:16px;}
+.about-card h5{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);margin-bottom:10px;}
+.about-card p{font-size:14px;color:var(--deep);line-height:1.65;white-space:pre-line;}
+.about-card-empty{color:var(--bark);font-style:italic;}
+.about-row{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:13px;color:var(--earth);}
+.about-row + .about-row{border-top:1px solid var(--warm);}
+.about-row svg{width:16px;height:16px;color:var(--bark);flex-shrink:0;}
+
+/* POST IMAGE */
+.post-image{display:block;width:100%;max-height:420px;object-fit:cover;margin:0 0 12px;background:var(--warm);}
+.post-hdr .post-av.is-photo{background-size:cover;background-position:center;color:transparent;}
+.post-author-link{background:none;border:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:left;display:inline-block;}
+.post-author-link:active{opacity:0.7;}
+.post-author-link .post-name{text-decoration:none;}
+.post-author-link:hover .post-name{text-decoration:underline;}
+
+/* USER PROFILE PAGE */
+.user-page-topbar{background:var(--deep);padding:10px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0;color:var(--cream);}
+.user-back-btn{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.08);color:var(--cream);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;}
+.user-back-btn svg{width:16px;height:16px;}
+.user-page-title{font-size:14px;font-weight:600;letter-spacing:0.3px;flex:1;}
+.user-page-loading{text-align:center;padding:48px 24px;color:var(--bark);font-size:14px;}
+
+/* COMPOSE IMAGE */
+.compose-image-wrap{position:relative;margin-bottom:14px;}
+.compose-image-preview{width:100%;max-height:240px;object-fit:cover;border-radius:12px;border:1px solid var(--stone);display:block;}
+.compose-image-remove{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.65);color:#fff;border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.compose-image-remove svg{width:14px;height:14px;}
+.compose-attach{display:inline-flex;align-items:center;gap:7px;background:var(--warm);border:1px solid var(--stone);border-radius:10px;padding:9px 12px;font-size:13px;color:var(--earth);cursor:pointer;font-family:'Sora',sans-serif;font-weight:500;margin-bottom:14px;}
+.compose-attach svg{width:14px;height:14px;}
+.compose-attach:active{background:var(--stone);}
+
+/* IMAGE CROPPER */
+.cropper-modal{background:rgba(20,12,4,0.94);}
+.cropper-sheet{background:var(--deep);color:var(--cream);border-radius:28px 28px 0 0;padding:10px 0 28px;width:100%;max-height:96vh;display:flex;flex-direction:column;}
+.cropper-hdr{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 14px;}
+.cropper-title{font-size:16px;font-weight:700;color:var(--cream);}
+.cropper-close{background:rgba(255,255,255,0.08);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--cream);}
+.cropper-stage{position:relative;width:100%;background:#0C0703;height:62vh;max-height:480px;overflow:hidden;touch-action:none;display:flex;align-items:center;justify-content:center;-webkit-user-select:none;user-select:none;}
+.cropper-crop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);overflow:hidden;z-index:1;}
+.cropper-img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);will-change:transform;-webkit-user-drag:none;user-drag:none;pointer-events:none;max-width:none;max-height:none;}
+.cropper-mask{position:absolute;inset:0;pointer-events:none;z-index:2;}
+.cropper-mask-circle{background:radial-gradient(circle at center,transparent 0,transparent var(--cropR,140px),rgba(12,7,3,0.72) calc(var(--cropR,140px) + 1px));}
+.cropper-mask-circle::after{content:'';position:absolute;top:50%;left:50%;width:calc(var(--cropR,140px) * 2);height:calc(var(--cropR,140px) * 2);transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,255,255,0.75);box-shadow:0 0 0 1px rgba(0,0,0,0.4);}
+.cropper-mask-banner{background:transparent;overflow:hidden;}
+.cropper-mask-banner::before{content:'';position:absolute;top:50%;left:50%;width:var(--cropW,320px);height:var(--cropH,112px);transform:translate(-50%,-50%);background:transparent;box-shadow:0 0 0 2000px rgba(12,7,3,0.72);outline:2px solid rgba(255,255,255,0.75);}
+.cropper-hint{font-size:12px;color:rgba(250,247,242,0.6);text-align:center;padding:14px 20px 4px;}
+.cropper-controls{padding:10px 24px 6px;display:flex;align-items:center;gap:12px;}
+.cropper-zoom-icon{color:rgba(250,247,242,0.55);display:flex;align-items:center;justify-content:center;}
+.cropper-zoom-icon svg{width:16px;height:16px;}
+.cropper-zoom{flex:1;-webkit-appearance:none;appearance:none;background:transparent;height:22px;}
+.cropper-zoom:focus{outline:none;}
+.cropper-zoom::-webkit-slider-runnable-track{height:3px;background:rgba(250,247,242,0.2);border-radius:3px;}
+.cropper-zoom::-moz-range-track{height:3px;background:rgba(250,247,242,0.2);border-radius:3px;}
+.cropper-zoom::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);margin-top:-8px;border:2px solid var(--deep);cursor:pointer;}
+.cropper-zoom::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--gold);border:2px solid var(--deep);cursor:pointer;}
+.cropper-actions{display:flex;gap:10px;padding:14px 20px 0;}
+.cropper-btn{flex:1;padding:13px;border-radius:14px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);color:var(--cream);}
+.cropper-btn:active{background:rgba(255,255,255,0.1);}
+.cropper-btn-primary{flex:2;background:var(--gold);color:var(--deep);border-color:var(--gold);font-weight:700;}
+.cropper-btn-primary:active{background:#BE9035;}
+.cropper-replace{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:var(--cream);border-radius:20px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Sora',sans-serif;margin:10px auto 0;}
+.cropper-replace svg{width:13px;height:13px;}
+.cropper-replace:active{background:rgba(255,255,255,0.12);}
+
+/* ACTION SHEET (photo menu) */
+.action-sheet{padding:8px 16px 24px;}
+.action-row{display:flex;align-items:center;gap:14px;padding:16px 14px;background:#fff;border:1px solid var(--stone);border-radius:14px;margin-bottom:8px;cursor:pointer;font-family:'Sora',sans-serif;width:100%;font-size:15px;font-weight:500;color:var(--deep);text-align:left;}
+.action-row:active{background:var(--warm);}
+.action-row svg{width:18px;height:18px;color:var(--earth);flex-shrink:0;}
+.action-row.action-row-danger{color:var(--rust);}
+.action-row.action-row-danger svg{color:var(--rust);}
+.action-cancel{margin-top:8px;}
+
+/* AUTH SCREEN */
+#auth-screen{position:absolute;inset:0;background:var(--deep);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;z-index:900;overflow-y:auto;}
+#auth-screen.hidden{display:none;}
+.auth-brand{font-size:32px;font-weight:700;letter-spacing:-1px;color:var(--cream);margin-bottom:6px;}
+.auth-brand span{color:var(--gold);}
+.auth-tagline{font-size:11px;color:rgba(212,168,67,0.75);letter-spacing:2px;text-transform:uppercase;margin-bottom:34px;}
+.auth-card{width:100%;max-width:360px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:22px 20px 20px;}
+.auth-tabs{display:flex;gap:4px;margin-bottom:18px;background:rgba(0,0,0,0.2);border-radius:12px;padding:4px;}
+.auth-tab{flex:1;padding:10px;border:none;background:transparent;color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;border-radius:10px;cursor:pointer;font-family:'Sora',sans-serif;transition:all 0.15s;}
+.auth-tab.active{background:var(--gold);color:var(--deep);}
+.auth-label{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(212,168,67,0.8);display:block;margin-bottom:6px;margin-top:14px;}
+.auth-input{width:100%;padding:13px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:var(--cream);font-family:'Sora',sans-serif;font-size:15px;outline:none;}
+.auth-input:focus{border-color:var(--gold);background:rgba(255,255,255,0.08);}
+.auth-input::placeholder{color:rgba(250,247,242,0.35);}
+.auth-submit{width:100%;margin-top:20px;padding:14px;background:var(--gold);color:var(--deep);border:none;border-radius:14px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;}
+.auth-submit:active{background:#BE9035;}
+.auth-submit:disabled{opacity:0.6;cursor:not-allowed;}
+.auth-msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-top:14px;line-height:1.45;}
+.auth-msg.error{background:rgba(196,85,42,0.15);color:#F2B8A1;border:1px solid rgba(196,85,42,0.3);}
+.auth-msg.success{background:rgba(107,143,113,0.15);color:#C1DAC5;border:1px solid rgba(107,143,113,0.3);}
+.auth-link{display:block;width:100%;text-align:center;margin-top:12px;font-size:13px;color:rgba(212,168,67,0.85);background:none;border:none;cursor:pointer;font-family:'Sora',sans-serif;padding:6px;}
+.auth-link:active{color:var(--gold);}
+.auth-footnote{margin-top:28px;font-size:11px;color:rgba(250,247,242,0.45);text-align:center;max-width:320px;line-height:1.55;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div id="splash">
+    <div class="splash-mark">stoma<span>link</span></div>
+    <div class="splash-sub">Community &middot; Faith &middot; Strength</div>
+  </div>
+
+  <div id="auth-screen" class="hidden" aria-label="Sign in to StomaLink">
+    <div class="auth-brand">stoma<span>link</span></div>
+    <div class="auth-tagline">Community &middot; Faith &middot; Strength</div>
+    <div class="auth-card">
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab active" id="auth-tab-login" onclick="setAuthMode('login')">Log in</button>
+        <button type="button" class="auth-tab" id="auth-tab-signup" onclick="setAuthMode('signup')">Sign up</button>
+      </div>
+      <form id="auth-form" onsubmit="return submitAuth(event)" autocomplete="on">
+        <div id="auth-name-row" style="display:none;">
+          <label class="auth-label" for="auth-name">Full name</label>
+          <input class="auth-input" id="auth-name" type="text" autocomplete="name" placeholder="Your name"/>
+        </div>
+        <label class="auth-label" for="auth-email">Email</label>
+        <input class="auth-input" id="auth-email" type="email" required autocomplete="email" placeholder="you@example.com"/>
+        <label class="auth-label" for="auth-password">Password</label>
+        <input class="auth-input" id="auth-password" type="password" required autocomplete="current-password" minlength="8" placeholder="At least 8 characters"/>
+        <button class="auth-submit" id="auth-submit" type="submit">Log in</button>
+      </form>
+      <button type="button" class="auth-link" id="auth-forgot" onclick="forgotPassword()">Forgot password?</button>
+      <div class="auth-msg" id="auth-msg" style="display:none;" role="status" aria-live="polite"></div>
+    </div>
+    <div class="auth-footnote">A faith-based community for ostomy patients. Sign in or create an account to join the conversation.</div>
+  </div>
+
+  <div class="topbar">
+    <div class="wordmark">stoma<span>link</span></div>
+    <div class="topbar-right">
+      <button class="icon-pill" onclick="showToast('Notifications coming soon!')" aria-label="Notifications">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <button class="icon-pill" onclick="showToast('Messages coming soon!')" aria-label="Messages">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </button>
+      <button class="icon-pill" id="logout-btn" onclick="logout()" aria-label="Log out" title="Log out">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="pages">
+
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+      <div class="daily-hero" id="daily-hero"></div>
+      <div class="sec-hdr">
+        <span class="sec-title">Community</span>
+        <button class="sec-action" onclick="showToast('Stories coming in v1.1')">See all</button>
+      </div>
+      <div class="stories-row" id="stories-bar"></div>
+      <div class="sec-hdr" style="padding-top:4px;">
+        <span class="sec-title" id="feed-title">Feed</span>
+      </div>
+      <div class="feed-wrap" id="feed"></div>
+      <div class="compose-bar">
+        <div class="c-dot" id="compose-av">ZM</div>
+        <div class="c-pill" onclick="openCompose()">
+          <span>Share a tip, story, or prayer...</span>
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPLORE -->
+    <div class="page" id="page-explore">
+      <div class="ex-search-wrap">
+        <div class="ex-search-icon-wrap">
+          <svg class="ex-search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="ex-input" placeholder="Search tips, products, stories..." oninput="doSearch(this.value)"/>
+        </div>
+      </div>
+      <div class="sec-hdr" style="padding-top:14px;"><span class="sec-title">Browse by category</span></div>
+      <div class="ex-grid">
+        <div class="ex-tile tile-faith" onclick="filterAndGo('faith')">
+          <svg fill="none" stroke="#D4A843" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <div class="ex-tile-label" style="color:#E8D5BC;">Faith & prayer</div>
+          <div class="ex-tile-sub" style="color:rgba(232,213,188,0.6);">Daily devotionals</div>
+        </div>
+        <div class="ex-tile tile-tip" onclick="filterAndGo('tip')">
+          <svg fill="none" stroke="#3A6040" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div class="ex-tile-label" style="color:#2A4A2A;">Tips & tricks</div>
+          <div class="ex-tile-sub" style="color:#4A7A4A;">Practical advice</div>
+        </div>
+        <div class="ex-tile tile-product" onclick="filterAndGo('product')">
+          <svg fill="none" stroke="#8B3520" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="ex-tile-label" style="color:#5A2010;">Product reviews</div>
+          <div class="ex-tile-sub" style="color:#8B4030;">What actually works</div>
+        </div>
+        <div class="ex-tile tile-article" onclick="filterAndGo('article')">
+          <svg fill="none" stroke="#1A3A5A" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <div class="ex-tile-label" style="color:#0A2A4A;">Articles</div>
+          <div class="ex-tile-sub" style="color:#2A5A7A;">Links & resources</div>
+        </div>
+        <div class="ex-tile tile-story" onclick="filterAndGo('story')">
+          <svg fill="none" stroke="#5A2A8A" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <div class="ex-tile-label" style="color:#3A0A6A;">My story</div>
+          <div class="ex-tile-sub" style="color:#6A3A9A;">Community journeys</div>
+        </div>
+        <div class="ex-tile tile-question" onclick="filterAndGo('question')">
+          <svg fill="none" stroke="#1A4A3A" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div class="ex-tile-label" style="color:#0A3A2A;">Questions</div>
+          <div class="ex-tile-sub" style="color:#3A7A6A;">Ask the community</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="page" id="page-support">
+      <div class="sup-hero">
+        <h2>You are not alone.</h2>
+        <p>A real person from the StomaLink community will respond to every message with care and compassion.</p>
+      </div>
+      <div class="sup-body">
+        <div id="sup-form">
+          <label class="flabel">Your name</label>
+          <input class="finput" id="s-name" placeholder="First name is fine"/>
+          <label class="flabel">Email (optional)</label>
+          <input class="finput" id="s-email" type="email" placeholder="So we can reply to you"/>
+          <label class="flabel">Topic</label>
+          <select class="fselect" id="s-topic">
+            <option value="">Select a topic...</option>
+            <option>I need emotional support</option>
+            <option>I have a question about my ostomy</option>
+            <option>I want to share my story</option>
+            <option>Product recommendation</option>
+            <option>Other</option>
+          </select>
+          <label class="flabel">Your message</label>
+          <textarea class="ftextarea" id="s-msg" placeholder="Share whatever is on your heart — we're listening..."></textarea>
+          <button class="btn-primary" onclick="submitSupport()">Send message</button>
+          <p class="sup-note">Messages sent to <strong>zmurphy@gutsycare.com</strong> — handled with complete confidentiality.</p>
+        </div>
+        <div id="sup-success">
+          <div style="font-size:36px;margin-bottom:12px;">&#10003;</div>
+          <h3>Message received</h3>
+          <p>Your message has been sent. Someone from StomaLink will reach out soon.<br><br>You are seen, heard, and deeply loved.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div class="page" id="page-profile">
+      <div class="prof-cover" id="prof-cover">
+        <button class="prof-cover-edit" onclick="openPhotoSheet('cover')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span id="cover-edit-label">Add cover</span>
+        </button>
+      </div>
+      <div class="prof-ident">
+        <div class="prof-av-wrap">
+          <div class="prof-av-big" id="prof-av-big" onclick="openPhotoSheet('avatar')"><span id="prof-av-txt">ZM</span></div>
+          <div class="prof-av-cam" onclick="openPhotoSheet('avatar')">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+        </div>
+        <div class="prof-ident-meta">
+          <div class="prof-name-row">
+            <div class="prof-name-big" id="prof-name-disp">Zach Murphy</div>
+            <div class="prof-handle" id="prof-handle-disp">@zach</div>
+          </div>
+          <div class="prof-headline" id="prof-headline-disp"></div>
+          <div class="prof-bio" id="prof-bio-disp" style="display:none;"></div>
+          <div class="prof-meta-row" id="prof-meta-row"></div>
+          <div class="prof-stats-new">
+            <div class="pstat"><span class="pstat-n" id="post-count">0</span><span class="pstat-l">Posts</span></div>
+            <div class="pstat"><span class="pstat-n" id="follower-count">0</span><span class="pstat-l">Followers</span></div>
+            <div class="pstat"><span class="pstat-n" id="following-count">0</span><span class="pstat-l">Following</span></div>
+          </div>
+          <div class="prof-actions">
+            <button class="prof-btn prof-btn-primary" onclick="openEditProfile()">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit profile
+            </button>
+            <button class="prof-btn" onclick="shareProfile()">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Share
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="prof-tabs">
+        <button class="prof-tab active" data-ptab="posts" onclick="switchProfTab('posts')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+          Posts
+        </button>
+        <button class="prof-tab" data-ptab="photos" onclick="switchProfTab('photos')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Photos
+        </button>
+        <button class="prof-tab" data-ptab="about" onclick="switchProfTab('about')">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          About
+        </button>
+      </div>
+      <div class="prof-tab-content" id="prof-tab-posts"></div>
+      <div class="prof-tab-content" id="prof-tab-photos" style="display:none;"></div>
+      <div class="prof-tab-content" id="prof-tab-about" style="display:none;"></div>
+      <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)"/>
+      <input type="file" id="cover-upload" accept="image/*" style="display:none;" onchange="handleCoverUpload(event)"/>
+    </div>
+
+    <!-- USER PROFILE (viewing another member) -->
+    <div class="page" id="page-user">
+      <div class="user-page-topbar">
+        <button class="user-back-btn" onclick="closeUserProfile()" aria-label="Back">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="user-page-title" id="user-page-title">Profile</div>
+      </div>
+      <div id="user-page-content">
+        <div class="user-page-loading">Loading profile…</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottomnav">
+    <button class="nav-item active" id="nav-home" onclick="navTo('home')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" id="nav-explore" onclick="navTo('explore')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span class="nav-label">Explore</span>
+    </button>
+    <button class="nav-item nav-center" onclick="openCompose()">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span class="nav-label">Post</span>
+    </button>
+    <button class="nav-item" id="nav-support" onclick="navTo('support')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <span class="nav-label">Support</span>
+    </button>
+    <button class="nav-item" id="nav-profile" onclick="navTo('profile')">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="nav-label">Profile</span>
+    </button>
+  </div>
+
+  <!-- COMPOSE MODAL -->
+  <div class="modal-bg" id="compose-modal" onclick="if(event.target===this)closeCompose()">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-hdr">
+        <div class="modal-title">Share with StomaLink</div>
+        <button class="modal-close" onclick="closeCompose()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="flabel" style="margin-bottom:10px;">Category</div>
+      <div class="type-grid">
+        <div class="type-chip" data-type="tip" onclick="pickType(this)">Tip / trick</div>
+        <div class="type-chip" data-type="product" onclick="pickType(this)">Product rec</div>
+        <div class="type-chip" data-type="article" onclick="pickType(this)">Article link</div>
+        <div class="type-chip" data-type="faith" onclick="pickType(this)">Faith / prayer</div>
+        <div class="type-chip" data-type="story" onclick="pickType(this)">My story</div>
+        <div class="type-chip" data-type="question" onclick="pickType(this)">Question</div>
+      </div>
+      <div id="link-row" style="display:none;">
+        <div class="flabel" style="margin-bottom:7px;">Article URL</div>
+        <input class="finput" id="compose-link" placeholder="https://" type="url"/>
+      </div>
+      <div class="flabel" style="margin-bottom:7px;">Your message</div>
+      <textarea class="compose-ta" id="compose-text" placeholder="Share with the community..."></textarea>
+      <div class="compose-image-wrap" id="compose-image-wrap" style="display:none;">
+        <img class="compose-image-preview" id="compose-image-preview" alt="Attachment preview"/>
+        <button class="compose-image-remove" onclick="clearComposeImage()" aria-label="Remove photo">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <button class="compose-attach" onclick="document.getElementById('compose-image-upload').click()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Add photo
+      </button>
+      <input type="file" id="compose-image-upload" accept="image/*" style="display:none;" onchange="handleComposeImage(event)"/>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeCompose()">Cancel</button>
+        <button class="btn-post" onclick="submitPost()">Post</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMENTS MODAL -->
+  <div class="modal-bg" id="comments-modal" onclick="if(event.target===this)closeComments()">
+    <div class="modal-sheet" style="max-height:80vh;">
+      <div class="modal-handle"></div>
+      <div class="modal-hdr">
+        <div class="modal-title" id="comments-title">Comments</div>
+        <button class="modal-close" onclick="closeComments()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div id="comments-list" style="margin-bottom:14px;"></div>
+      <div class="comment-row">
+        <div class="c-dot" id="comment-av" style="width:32px;height:32px;font-size:10px;flex-shrink:0;border-radius:10px;">ZM</div>
+        <input class="comment-input" id="comment-input" placeholder="Add a comment..." onkeydown="if(event.key==='Enter')addComment()"/>
+        <button class="comment-send" onclick="addComment()">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div class="modal-bg" id="edit-profile-modal" onclick="if(event.target===this)closeEditProfile()">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-hdr">
+        <div class="modal-title">Edit profile</div>
+        <button class="modal-close" onclick="closeEditProfile()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <label class="flabel">Display name</label>
+      <input class="finput" id="edit-name" placeholder="Your name" maxlength="60"/>
+      <label class="flabel">Username</label>
+      <input class="finput" id="edit-handle" placeholder="@yourname" maxlength="30"/>
+      <label class="flabel">Headline</label>
+      <input class="finput" id="edit-headline" placeholder="e.g. Ileostomy · 2 years" maxlength="80"/>
+      <label class="flabel">Bio</label>
+      <textarea class="ftextarea" id="edit-bio" placeholder="Tell the community about yourself..." maxlength="300"></textarea>
+      <label class="flabel">Location (optional)</label>
+      <input class="finput" id="edit-location" placeholder="City, State" maxlength="60"/>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeEditProfile()">Cancel</button>
+        <button class="btn-post" onclick="saveEditProfile()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHOTO ACTION SHEET -->
+  <div class="modal-bg" id="photo-sheet-modal" onclick="if(event.target===this)closePhotoSheet()">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-hdr">
+        <div class="modal-title" id="photo-sheet-title">Profile photo</div>
+        <button class="modal-close" onclick="closePhotoSheet()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="action-sheet">
+        <button class="action-row" id="photo-edit-row" onclick="editCurrentPhoto()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit current photo
+        </button>
+        <button class="action-row" onclick="pickNewPhoto()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Upload new photo
+        </button>
+        <button class="action-row action-row-danger" id="photo-remove-row" onclick="removeCurrentPhoto()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>
+          Remove photo
+        </button>
+        <div class="modal-actions action-cancel">
+          <button class="btn-cancel" style="flex:1;" onclick="closePhotoSheet()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE CROPPER MODAL -->
+  <div class="modal-bg cropper-modal" id="cropper-modal" onclick="if(event.target===this)closeCropper()">
+    <div class="cropper-sheet">
+      <div class="cropper-hdr">
+        <div class="cropper-title" id="cropper-title">Edit photo</div>
+        <button class="cropper-close" onclick="closeCropper()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="cropper-stage" id="cropper-stage">
+        <div class="cropper-crop" id="cropper-crop">
+          <img class="cropper-img" id="cropper-img" alt=""/>
+        </div>
+        <div class="cropper-mask" id="cropper-mask"></div>
+      </div>
+      <div class="cropper-hint">Drag to reposition &middot; Pinch or use slider to zoom</div>
+      <div class="cropper-controls">
+        <span class="cropper-zoom-icon" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </span>
+        <input class="cropper-zoom" id="cropper-zoom" type="range" min="1" max="3" step="0.01" value="1"/>
+      </div>
+      <div style="text-align:center;">
+        <button class="cropper-replace" onclick="document.getElementById('cropper-file').click()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Choose different photo
+        </button>
+      </div>
+      <div class="cropper-actions">
+        <button class="cropper-btn" onclick="closeCropper()">Cancel</button>
+        <button class="cropper-btn cropper-btn-primary" onclick="saveCropper()">Save</button>
+      </div>
+      <input type="file" id="cropper-file" accept="image/*" style="display:none;" onchange="handleCropperReplace(event)"/>
+    </div>
+  </div>
+
+  <div class="toast" id="toast-el"></div>
+</div>
+
+<script src="/auth.bundle.js"></script>
+<script>
+var VERSES=[
+  {text:'"I can do all things through Christ who strengthens me."',ref:'Philippians 4:13'},
+  {text:'"The Lord is my shepherd; I shall not want."',ref:'Psalm 23:1'},
+  {text:'"Fear not, for I am with you; be not dismayed, for I am your God."',ref:'Isaiah 41:10'},
+  {text:'"He gives strength to the weary and increases the power of the weak."',ref:'Isaiah 40:29'},
+  {text:'"Cast all your anxiety on him because he cares for you."',ref:'1 Peter 5:7'},
+  {text:'"For I know the plans I have for you — plans to prosper you and give you hope."',ref:'Jeremiah 29:11'},
+  {text:'"Be strong and courageous. Do not be afraid; the Lord your God will be with you."',ref:'Joshua 1:9'},
+  {text:'"The Lord is close to the brokenhearted and saves those who are crushed in spirit."',ref:'Psalm 34:18'},
+  {text:'"Come to me, all you who are weary and burdened, and I will give you rest."',ref:'Matthew 11:28'},
+  {text:'"My grace is sufficient for you, for my power is made perfect in weakness."',ref:'2 Corinthians 12:9'},
+  {text:'"I praise you because I am fearfully and wonderfully made."',ref:'Psalm 139:14'},
+  {text:'"But those who hope in the Lord will renew their strength. They will soar on wings like eagles."',ref:'Isaiah 40:31'},
+  {text:'"And we know that in all things God works for the good of those who love him."',ref:'Romans 8:28'},
+  {text:'"Do not be anxious about anything, but in every situation present your requests to God."',ref:'Philippians 4:6'},
+];
+var PRAYERS=[
+  'Lord, on our hardest days remind us our bodies are resilient. Surround us with community, peace, and your unending love. Amen.',
+  'Father, grant us strength when we feel weak and courage when we feel afraid. Help us find beauty in every day. Amen.',
+  'Lord, we lift up every person in this community. May they feel your presence in their pain and joy in their healing. Amen.',
+  'God, thank you for this community of strength and faith. Help us lift each other up and walk this road together. Amen.',
+  'Heavenly Father, remind us our worth is not defined by our bodies. We are made in your image — whole, loved, purposeful. Amen.',
+  'Lord, give us wisdom in navigating our care, patience on difficult days, and gratitude for every small victory. Amen.',
+  'Father, for those newly diagnosed and afraid — meet them where they are. Let them feel your peace and this community\'s warmth. Amen.',
+];
+var D=new Date().getDay();
+var VERSE=VERSES[D%VERSES.length];
+var PRAYER=PRAYERS[D%PRAYERS.length];
+
+// Seed posts — gives the feed life on day one
+var POSTS=[
+  {id:1,type:'story',user:'Margaret T.',initials:'MT',av:'av-earth',sub:'Colostomy · 3 years',time:'2 days ago',likes:24,liked:false,
+   body:'Three years post-surgery and I just ran a 5K. When I was in the hospital I couldn\'t imagine getting out of bed. If you\'re newly diagnosed and reading this — it gets better. So much better. You are still you.',
+   comments:[
+     {user:'David K.',initials:'DK',av:'av-sage',text:'This is exactly what I needed to read today. Thank you Margaret.',time:'1 day ago'},
+     {user:'StomaLink',initials:'SL',av:'av-deep',text:'What an inspiration. We are so proud of you! 🙌',time:'1 day ago'}
+   ]},
+  {id:2,type:'tip',user:'James R.',initials:'JR',av:'av-sky',sub:'Ileostomy · 18 months',time:'3 days ago',likes:31,liked:false,
+   body:'Hot tip for summer: keep a small cooler bag in your car with extra supplies, a few wet wipes, and a change of clothes. I got caught off guard once at a work event — never again. Preparation is everything.',
+   comments:[
+     {user:'Sarah M.',initials:'SM',av:'av-teal',text:'Adding the cooler bag idea right now. Genius.',time:'2 days ago'}
+   ]},
+  {id:3,type:'product',user:'Linda C.',initials:'LC',av:'av-rust',sub:'Urostomy · 5 years',time:'4 days ago',likes:18,liked:false,
+   body:'After trying six different barrier rings, Hollister CeraRing is the one. No leaks for 4 days straight and it doesn\'t irritate my skin at all. Worth every penny — ask your supplier about samples first.',
+   comments:[]},
+  {id:4,type:'question',user:'NewToThis_2024',initials:'NT',av:'av-purple',sub:'',time:'5 days ago',likes:9,liked:false,
+   body:'Just got home from my reversal surgery consult and the doctor said I may not be a candidate. I\'m feeling really lost. Has anyone else been through this? How did you process it?',
+   comments:[
+     {user:'Margaret T.',initials:'MT',av:'av-earth',text:'Sending you so much love. The grief of that news is real. Please feel free to DM me anytime.',time:'4 days ago'},
+     {user:'Pastor Greg',initials:'PG',av:'av-gold',text:'You are not defined by this outcome. You are whole, loved, and walking a path that has purpose. We are here for you.',time:'4 days ago'}
+   ]},
+  {id:5,type:'article',user:'StomaLink',initials:'SL',av:'av-deep',sub:'Official',time:'1 week ago',likes:42,liked:false,
+   link:{title:'Living Fully with an Ostomy — UOAA Guide',url:'https://www.ostomy.org/living-with-an-ostomy/'},
+   comments:[]},
+  {id:6,type:'faith',user:'Pastor Greg',initials:'PG',av:'av-gold',sub:'Community chaplain',time:'1 week ago',likes:55,liked:false,
+   body:null,comments:[
+     {user:'Linda C.',initials:'LC',av:'av-rust',text:'This verse has gotten me through so many hard mornings. Thank you Pastor Greg.',time:'6 days ago'}
+   ]},
+];
+
+var STORIES=[
+  {name:'Margaret',initials:'MT',style:'background:#EDE0CC;color:#5C4A32;',live:true},
+  {name:'James',initials:'JR',style:'background:#D5E5F0;color:#1A3A5A;',live:false},
+  {name:'Linda',initials:'LC',style:'background:#F5DDD5;color:#8B3520;',live:false},
+  {name:'Pastor G.',initials:'PG',style:'background:#F5EAD0;color:#5A3A0A;',live:false},
+  {name:'Sarah',initials:'SM',style:'background:#D5EDE8;color:#1A4A3A;',live:false},
+];
+
+var activeFilter=null,selectedType='',commentPostId=null,toastTimer=null,composeImage=null,activeProfTab='posts';
+
+var CURRENT_USER=null;
+var authMode='login';
+var POSTS_SEED=POSTS.slice();
+var POSTS_API=[];
+var PROFILE=emptyProfile();
+var USER_POSTS=[];
+var USER_CACHE={};
+var USER_PENDING={};
+var VIEWED_USER=null;
+
+function emptyProfile(){
+  return{name:'',handle:'',headline:'',bio:'',location:'',avatar:null,cover:null,joined:new Date().toISOString().slice(0,7)};
+}
+function defaultNameFromUser(){
+  if(CURRENT_USER){
+    if(CURRENT_USER.name)return CURRENT_USER.name;
+    if(CURRENT_USER.email)return CURRENT_USER.email.split('@')[0];
+  }
+  return '';
+}
+function defaultHandleFromUser(){
+  if(CURRENT_USER&&CURRENT_USER.email){
+    var h=CURRENT_USER.email.split('@')[0].replace(/[^a-zA-Z0-9_]/g,'');
+    if(h)return '@'+h;
+  }
+  return '';
+}
+function profileKey(){return CURRENT_USER?'stomalink_profile_'+CURRENT_USER.id:'stomalink_profile_anon';}
+function postsKey(){return CURRENT_USER?'stomalink_userposts_'+CURRENT_USER.id:'stomalink_userposts_anon';}
+
+function loadProfile(){
+  try{
+    var s=localStorage.getItem(profileKey());
+    if(s){
+      var p=JSON.parse(s);
+      return{
+        name:typeof p.name==='string'?p.name:defaultNameFromUser(),
+        handle:typeof p.handle==='string'?p.handle:defaultHandleFromUser(),
+        headline:typeof p.headline==='string'?p.headline:'',
+        bio:typeof p.bio==='string'?p.bio:'',
+        location:typeof p.location==='string'?p.location:'',
+        avatar:p.avatar||null,
+        cover:p.cover||null,
+        joined:p.joined||new Date().toISOString().slice(0,7)
+      };
+    }
+  }catch(e){}
+  return{name:defaultNameFromUser(),handle:defaultHandleFromUser(),headline:'',bio:'',location:'',avatar:null,cover:null,joined:new Date().toISOString().slice(0,7)};
+}
+function saveProfile(){
+  try{localStorage.setItem(profileKey(),JSON.stringify(PROFILE));}
+  catch(e){showToast('Could not cache locally — trying server...');}
+  apiPutProfile(PROFILE).catch(function(err){
+    if(err&&err.status!==401)showToast('Could not sync profile to server');
+  });
+}
+function loadUserPosts(){
+  try{var s=localStorage.getItem(postsKey());if(s)return JSON.parse(s)||[];}catch(e){}
+  return[];
+}
+function saveUserPosts(){
+  try{localStorage.setItem(postsKey(),JSON.stringify(USER_POSTS));}
+  catch(e){}
+}
+
+function initUserSession(){
+  PROFILE=loadProfile();
+  USER_POSTS=loadUserPosts();
+  POSTS=USER_POSTS.concat(POSTS_SEED);
+  renderProfile();
+  renderFeed(activeFilter);
+  Promise.all([apiGetProfile(),apiListPosts()])
+    .then(function(r){
+      var serverProfile=r[0];
+      if(serverProfile){
+        PROFILE=mergeServerProfile(PROFILE,serverProfile);
+        try{localStorage.setItem(profileKey(),JSON.stringify(PROFILE));}catch(e){}
+      }
+      var serverPosts=r[1]||[];
+      POSTS_API=serverPosts.map(mapServerPost);
+      rebuildFeed();
+      renderProfile();
+      renderFeed(activeFilter);
+    })
+    .catch(function(){});
+}
+function mergeServerProfile(local,server){
+  return{
+    name:server.name||local.name||defaultNameFromUser(),
+    handle:server.handle||local.handle||defaultHandleFromUser(),
+    headline:typeof server.headline==='string'?server.headline:(local.headline||''),
+    bio:typeof server.bio==='string'?server.bio:(local.bio||''),
+    location:typeof server.location==='string'?server.location:(local.location||''),
+    avatar:server.avatar||local.avatar||null,
+    cover:server.cover||local.cover||null,
+    joined:server.joined||local.joined||new Date().toISOString().slice(0,7)
+  };
+}
+function mapServerPost(sp){
+  return{
+    id:sp.id,
+    userId:sp.userId,
+    type:sp.type,
+    user:null,
+    initials:'',
+    av:'av-gold',
+    avatarImg:null,
+    sub:'',
+    time:formatRelativeTime(sp.createdAt),
+    body:sp.body||'',
+    image:sp.image||null,
+    link:sp.link||null,
+    likes:Number(sp.likes)||0,
+    liked:false,
+    comments:Array.isArray(sp.comments)?sp.comments:[],
+    ownedByMe:!!(CURRENT_USER&&sp.userId===CURRENT_USER.id),
+    _server:true,
+    _createdAt:sp.createdAt||null
+  };
+}
+function rebuildFeed(){
+  var seen={};
+  var all=[];
+  POSTS_API.forEach(function(p){seen[p.id]=true;all.push(p);});
+  USER_POSTS.forEach(function(p){if(!seen[p.id]){seen[p.id]=true;all.push(p);}});
+  POSTS_SEED.forEach(function(p){if(!seen[p.id]){seen[p.id]=true;all.push(p);}});
+  POSTS=all;
+  hydrateAuthorsForPosts();
+}
+function hydrateAuthorsForPosts(){
+  POSTS.forEach(function(p){
+    if(!p.userId)return;
+    if(CURRENT_USER&&p.userId===CURRENT_USER.id){
+      p.user=PROFILE.name||'You';
+      p.initials=initials(PROFILE.name);
+      p.avatarImg=PROFILE.avatar||null;
+      p.sub=PROFILE.headline||'';
+      return;
+    }
+    var cache=USER_CACHE[p.userId];
+    if(cache){
+      p.user=cache.name||'StomaLink user';
+      p.initials=initials(cache.name);
+      p.avatarImg=cache.avatar||null;
+      p.sub=cache.headline||'';
+    }else{
+      p.user=p.user||'StomaLink user';
+      p.initials=p.initials||'SL';
+      fetchUserIntoCache(p.userId);
+    }
+  });
+}
+function fetchUserIntoCache(userId){
+  if(!userId||USER_CACHE[userId]||USER_PENDING[userId])return;
+  USER_PENDING[userId]=true;
+  apiGetProfileById(userId).then(function(p){
+    USER_PENDING[userId]=false;
+    if(!p)return;
+    USER_CACHE[userId]=p;
+    hydrateAuthorsForPosts();
+    renderFeed(activeFilter);
+    renderProfile();
+  }).catch(function(){USER_PENDING[userId]=false;});
+}
+function formatRelativeTime(iso){
+  if(!iso)return'Just now';
+  try{
+    var t=new Date(iso).getTime();
+    var diff=Date.now()-t;
+    if(diff<60000)return'Just now';
+    if(diff<3600000)return Math.floor(diff/60000)+'m ago';
+    if(diff<86400000)return Math.floor(diff/3600000)+'h ago';
+    if(diff<604800000)return Math.floor(diff/86400000)+'d ago';
+    return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  }catch(e){return'';}
+}
+
+function apiFetch(path,options){
+  return fetch(path,Object.assign({credentials:'same-origin',headers:{'content-type':'application/json'}},options||{}))
+    .then(function(r){
+      if(!r.ok){var err=new Error('HTTP '+r.status);err.status=r.status;throw err;}
+      return r.json();
+    });
+}
+function apiGetProfile(){
+  return apiFetch('/.netlify/functions/profile').then(function(d){return d&&d.profile;}).catch(function(err){if(err&&err.status===404)return null;throw err;});
+}
+function apiGetProfileById(userId){
+  return apiFetch('/.netlify/functions/profile?id='+encodeURIComponent(userId)).then(function(d){return d&&d.profile;});
+}
+function apiPutProfile(p){
+  var payload={name:p.name||'',handle:p.handle||'',headline:p.headline||'',bio:p.bio||'',location:p.location||'',joined:p.joined||'',avatar:p.avatar||null,cover:p.cover||null};
+  return apiFetch('/.netlify/functions/profile',{method:'PUT',body:JSON.stringify(payload)});
+}
+function apiListPosts(){
+  return apiFetch('/.netlify/functions/posts').then(function(d){return(d&&d.posts)||[];}).catch(function(){return[];});
+}
+function apiListPostsByUser(userId){
+  return apiFetch('/.netlify/functions/posts?userId='+encodeURIComponent(userId)).then(function(d){return(d&&d.posts)||[];}).catch(function(){return[];});
+}
+function apiCreatePost(body){
+  return apiFetch('/.netlify/functions/posts',{method:'POST',body:JSON.stringify(body)}).then(function(d){return d&&d.post;});
+}
+
+function setAuthMode(mode){
+  authMode=mode;
+  document.getElementById('auth-tab-login').classList.toggle('active',mode==='login');
+  document.getElementById('auth-tab-signup').classList.toggle('active',mode==='signup');
+  document.getElementById('auth-name-row').style.display=mode==='signup'?'':'none';
+  document.getElementById('auth-submit').textContent=mode==='signup'?'Create account':'Log in';
+  document.getElementById('auth-password').setAttribute('autocomplete',mode==='signup'?'new-password':'current-password');
+  clearAuthMsg();
+}
+function showAuthMsg(msg,kind){
+  var el=document.getElementById('auth-msg');
+  el.textContent=msg;el.style.display='block';
+  el.className='auth-msg '+(kind||'error');
+}
+function clearAuthMsg(){
+  var el=document.getElementById('auth-msg');el.style.display='none';el.textContent='';
+}
+function handleAuthError(err){
+  if(!window.StomaAuth){showAuthMsg('Authentication is not available right now.');return;}
+  if(err&&window.StomaAuth.MissingIdentityError&&err instanceof window.StomaAuth.MissingIdentityError){
+    showAuthMsg('Identity is not enabled yet. If you just deployed, it may take a moment to activate.');return;
+  }
+  if(err&&window.StomaAuth.AuthError&&err instanceof window.StomaAuth.AuthError){
+    if(err.status===401){showAuthMsg('Invalid email or password.');return;}
+    if(err.status===403){showAuthMsg('Signups are not allowed right now. Ask the admin for an invite.');return;}
+    if(err.status===422){showAuthMsg('Check your email format and use a password of at least 8 characters.');return;}
+    if(err.status===400){showAuthMsg(err.message||'That request could not be processed.');return;}
+    showAuthMsg(err.message||'Something went wrong. Please try again.');return;
+  }
+  showAuthMsg((err&&err.message)||'Network error. Please try again.');
+}
+function submitAuth(e){
+  e.preventDefault();
+  if(!window.StomaAuth){showAuthMsg('Authentication is not available right now.');return false;}
+  var email=document.getElementById('auth-email').value.trim();
+  var password=document.getElementById('auth-password').value;
+  var name=document.getElementById('auth-name').value.trim();
+  var btn=document.getElementById('auth-submit');
+  btn.disabled=true;clearAuthMsg();
+  var done=function(){btn.disabled=false;};
+  if(authMode==='signup'){
+    window.StomaAuth.signup(email,password,{full_name:name||email.split('@')[0]})
+      .then(function(user){
+        if(user&&user.emailVerified){
+          showAuthMsg('Account created. Signing you in...','success');
+        }else{
+          showAuthMsg('Check your inbox for a confirmation link, then come back and log in.','success');
+          setAuthMode('login');
+        }
+      })
+      .catch(handleAuthError)
+      .then(done,done);
+  }else{
+    window.StomaAuth.login(email,password)
+      .catch(handleAuthError)
+      .then(done,done);
+  }
+  return false;
+}
+function forgotPassword(){
+  if(!window.StomaAuth){showAuthMsg('Authentication is not available right now.');return;}
+  var email=document.getElementById('auth-email').value.trim();
+  if(!email){showAuthMsg('Enter your email above, then tap Forgot password.');return;}
+  clearAuthMsg();
+  window.StomaAuth.requestPasswordRecovery(email)
+    .then(function(){showAuthMsg('If an account exists for that email, a reset link has been sent.','success');})
+    .catch(handleAuthError);
+}
+function showAuthScreen(){
+  document.getElementById('auth-screen').classList.remove('hidden');
+  var lb=document.getElementById('logout-btn');if(lb)lb.style.display='none';
+}
+function hideAuthScreen(){
+  document.getElementById('auth-screen').classList.add('hidden');
+  var lb=document.getElementById('logout-btn');if(lb)lb.style.display='';
+}
+function logout(){
+  if(!window.StomaAuth)return;
+  if(!confirm('Log out of StomaLink?'))return;
+  window.StomaAuth.logout().catch(function(){});
+}
+function onUserSignedIn(user){
+  CURRENT_USER=user;
+  initUserSession();
+  renderDaily();
+  renderStories();
+  hideAuthScreen();
+  clearAuthMsg();
+  document.getElementById('auth-password').value='';
+}
+function onUserSignedOut(){
+  CURRENT_USER=null;
+  PROFILE=emptyProfile();
+  USER_POSTS=[];
+  POSTS_API=[];
+  USER_CACHE={};
+  USER_PENDING={};
+  POSTS=POSTS_SEED.slice();
+  showAuthScreen();
+}
+
+window.onload=function(){
+  if(!window.StomaAuth){
+    showAuthScreen();
+    showAuthMsg('Authentication module failed to load. Run the site via "netlify dev" or deploy to Netlify to enable sign in.');
+    setTimeout(function(){document.getElementById('splash').classList.add('gone');},600);
+    return;
+  }
+  var E=window.StomaAuth.AUTH_EVENTS;
+  window.StomaAuth.onAuthChange(function(ev,user){
+    if(ev===E.LOGIN)onUserSignedIn(user);
+    else if(ev===E.LOGOUT)onUserSignedOut();
+  });
+  Promise.resolve()
+    .then(function(){return window.StomaAuth.handleAuthCallback();})
+    .catch(function(){return null;})
+    .then(function(cb){
+      if(cb&&cb.type==='recovery'){
+        return handleRecoveryFlow();
+      }
+      return window.StomaAuth.getUser();
+    })
+    .catch(function(){return null;})
+    .then(function(user){
+      if(user)onUserSignedIn(user);
+      else onUserSignedOut();
+      setTimeout(function(){document.getElementById('splash').classList.add('gone');},600);
+    });
+};
+
+function handleRecoveryFlow(){
+  var pw=prompt('Reset password\n\nEnter a new password (at least 8 characters):');
+  if(!pw||pw.length<8){
+    alert('Password reset cancelled. You will need to log in with your previous password or request a new reset link.');
+    return window.StomaAuth.logout().then(function(){return null;}).catch(function(){return null;});
+  }
+  return window.StomaAuth.updateUser({password:pw})
+    .then(function(){return window.StomaAuth.getUser();})
+    .catch(function(err){
+      alert('Could not set new password: '+(err&&err.message||'unknown error'));
+      return window.StomaAuth.logout().then(function(){return null;}).catch(function(){return null;});
+    });
+}
+
+function renderDaily(){
+  document.getElementById('daily-hero').innerHTML=
+    '<div class="daily-eyebrow">Today\'s verse</div>'
+    +'<div class="daily-verse">'+VERSE.text+'</div>'
+    +'<div class="daily-ref">&#8212; '+VERSE.ref+'</div>'
+    +'<div class="daily-prayer"><div class="prayer-label">Daily prayer</div><div class="prayer-text">'+PRAYER+'</div></div>';
+}
+
+function renderStories(){
+  var b=document.getElementById('stories-bar');
+  var h='<div class="story-item" onclick="openCompose()">'
+    +'<div class="story-ring"><div class="story-face" style="font-size:20px;font-weight:300;color:var(--bark);">+</div></div>'
+    +'<span class="story-name">You</span></div>';
+  STORIES.forEach(function(s){
+    h+='<div class="story-item" onclick="showToast(\''+s.name+'\')">'
+      +'<div class="story-ring'+(s.live?' live':'')+'"><div class="story-face" style="'+s.style+'">'+s.initials+'</div></div>'
+      +'<span class="story-name">'+s.name+'</span></div>';
+  });
+  b.innerHTML=h;
+}
+
+function renderFeed(filter){
+  activeFilter=filter;
+  var c=document.getElementById('feed');
+  var ft=document.getElementById('feed-title');
+  var labels={faith:'Faith & prayer',tip:'Tips',product:'Product reviews',article:'Articles',story:'Stories',question:'Questions'};
+  ft.textContent=filter?labels[filter]:'Feed';
+  var posts=filter?POSTS.filter(function(p){return p.type===filter;}):POSTS;
+  if(!posts.length){
+    c.innerHTML='<div style="text-align:center;padding:48px 20px;"><p style="font-size:16px;font-weight:700;color:var(--deep);margin-bottom:8px;">Nothing here yet</p><p style="font-size:14px;color:var(--bark);">Be the first to share!</p></div>';
+    return;
+  }
+  var fb='';
+  if(filter){fb='<div class="filter-bar"><span style="font-size:13px;color:var(--bark);">Showing:</span><span class="filter-tag">'+labels[filter]+'<button onclick="clearFilter()">&#215;</button></span></div>';}
+  c.innerHTML=fb+posts.map(function(p){return'<div class="post-card">'+buildPost(p)+'</div>';}).join('');
+}
+
+function clearFilter(){renderFeed(null);}
+
+function buildPost(p){
+  var tagClass={faith:'ptag-faith',tip:'ptag-tip',product:'ptag-product',article:'ptag-article',story:'ptag-story',question:'ptag-question'};
+  var tagLabel={faith:'Faith',tip:'Tip',product:'Product rec',article:'Article',story:'Story',question:'Question'};
+  var pipClass={faith:'pip-faith',tip:'pip-tip',product:'pip-product',article:'pip-article',story:'pip-story',question:'pip-question'};
+  var content='';
+  if(p.type==='faith'){
+    content='<div style="background:var(--deep);padding:18px 16px;"><div style="font-family:Lora,serif;font-style:italic;font-size:15px;line-height:1.75;color:#E8D5BC;margin-bottom:8px;">'+VERSE.text+'</div><div style="font-size:11px;font-weight:600;color:var(--gold);">&#8212; '+VERSE.ref+'</div></div><div style="background:var(--warm);padding:14px 16px;border-top:1px solid var(--stone);"><div style="font-size:9px;font-weight:700;letter-spacing:2px;color:var(--bark);text-transform:uppercase;margin-bottom:6px;">Daily prayer</div><div style="font-size:13px;line-height:1.7;color:var(--earth);">'+PRAYER+'</div></div>';
+  } else {
+    if(p.body) content+='<div class="post-body">'+escapeHtml(p.body).replace(/\n/g,'<br>')+'</div>';
+    if(p.image) content+='<img class="post-image" src="'+p.image+'" alt="Post photo"/>';
+    if(p.link) content+='<a class="post-link" href="'+escapeAttr(p.link.url)+'" target="_blank" rel="noopener noreferrer"><div class="post-link-title">'+escapeHtml(p.link.title)+'</div><div class="post-link-url">'+escapeHtml(p.link.url.replace('https://','').replace('http://',''))+'</div></a>';
+  }
+  var hf=p.liked?'fill="currentColor" stroke="currentColor"':'fill="none" stroke="currentColor"';
+  var lc=p.liked?' liked':'';
+  var avatarHtml=p.avatarImg
+    ?'<div class="post-av is-photo" style="background-image:url(\''+p.avatarImg+'\');">'+escapeHtml(p.initials||'')+'</div>'
+    :'<div class="post-av '+(p.av||'av-gold')+'">'+escapeHtml(p.initials||'')+'</div>';
+  var pidAttr=escapeAttr(String(p.id));
+  var authorOpen='',authorClose='';
+  if(p.userId){
+    authorOpen='<button class="post-author-link" onclick="openUserProfile(\''+escapeAttr(p.userId)+'\')">';
+    authorClose='</button>';
+  }
+  return '<div class="post-hdr">'
+    +authorOpen+avatarHtml+authorClose
+    +'<div class="post-meta">'
+      +(p.userId?'<button class="post-author-link" onclick="openUserProfile(\''+escapeAttr(p.userId)+'\')"><div class="post-name">'+escapeHtml(p.user||'')+'</div></button>'
+                :'<div class="post-name">'+escapeHtml(p.user||'')+'</div>')
+      +'<div class="post-time-line">'+escapeHtml(p.time||'')+(p.sub?' &middot; '+escapeHtml(p.sub):'')+'</div>'
+    +'</div>'
+    +'<div class="type-pip '+pipClass[p.type]+'"></div>'
+    +'</div>'
+    +'<span class="post-tag '+tagClass[p.type]+'">'+tagLabel[p.type]+'</span>'
+    +content
+    +'<div class="post-actions">'
+    +'<button class="act'+lc+'" onclick="toggleLike(\''+pidAttr+'\',this)"><svg width="16" height="16" '+hf+' stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span>'+p.likes+'</span></button>'
+    +'<button class="act" onclick="openComments(\''+pidAttr+'\')"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>'+p.comments.length+'</span></button>'
+    +'<div class="act-spacer"></div>'
+    +'<button class="act" onclick="copyLink(\''+pidAttr+'\')"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>'
+    +'</div>';
+}
+
+function copyLink(id){
+  var url=window.location.href.split('?')[0]+'?post='+encodeURIComponent(String(id));
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){showToast('Link copied!');});}
+  else{showToast('Link copied!');}
+}
+
+function toggleLike(id,btn){
+  var p=POSTS.find(function(x){return String(x.id)===String(id);});if(!p)return;
+  p.liked=!p.liked;p.likes+=p.liked?1:-1;
+  btn.classList.toggle('liked',p.liked);
+  btn.querySelector('span').textContent=p.likes;
+  var svg=btn.querySelector('svg');
+  if(p.liked){svg.setAttribute('fill','currentColor');svg.setAttribute('stroke','currentColor');}
+  else{svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');}
+}
+
+function openComments(id){
+  commentPostId=id;
+  var p=POSTS.find(function(x){return String(x.id)===String(id);});if(!p)return;
+  document.getElementById('comments-title').textContent=p.comments.length+' comment'+(p.comments.length!==1?'s':'');
+  var list=document.getElementById('comments-list');
+  list.innerHTML=p.comments.length
+    ?p.comments.map(function(c){return'<div class="comment-item"><div class="post-av '+(c.av||'av-gold')+' comment-av" style="width:32px;height:32px;border-radius:10px;font-size:11px;font-weight:700;flex-shrink:0;">'+escapeHtml(c.initials||'')+'</div><div class="comment-bubble"><div class="comment-user">'+escapeHtml(c.user||'')+'<span class="comment-meta">'+escapeHtml(c.time||'')+'</span></div><div class="comment-text">'+escapeHtml(c.text||'')+'</div></div></div>';}).join('')
+    :'<p style="text-align:center;color:var(--bark);font-size:14px;padding:24px 0;">No comments yet. Be the first!</p>';
+  document.getElementById('comments-modal').classList.add('open');
+}
+function closeComments(){document.getElementById('comments-modal').classList.remove('open');}
+function addComment(){
+  var input=document.getElementById('comment-input');
+  var text=input.value.trim();if(!text||!commentPostId)return;
+  var p=POSTS.find(function(x){return String(x.id)===String(commentPostId);});if(!p)return;
+  p.comments.push({user:PROFILE.name||'You',initials:initials(PROFILE.name),av:'av-gold',text:text,time:'Just now'});
+  input.value='';openComments(commentPostId);renderFeed(activeFilter);
+  if(p.ownedByMe){saveUserPosts();}
+}
+
+function navTo(pg){
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active');});
+  var page=document.getElementById('page-'+pg);
+  if(page)page.classList.add('active');
+  var nav=document.getElementById('nav-'+pg);
+  if(nav)nav.classList.add('active');
+}
+
+function openCompose(){document.getElementById('compose-modal').classList.add('open');}
+function closeCompose(){
+  document.getElementById('compose-modal').classList.remove('open');
+  selectedType='';
+  document.querySelectorAll('.type-chip').forEach(function(c){c.classList.remove('sel');});
+  document.getElementById('compose-text').value='';
+  document.getElementById('compose-link').value='';
+  document.getElementById('link-row').style.display='none';
+  clearComposeImage();
+}
+function pickType(el){
+  document.querySelectorAll('.type-chip').forEach(function(c){c.classList.remove('sel');});
+  el.classList.add('sel');selectedType=el.dataset.type;
+  document.getElementById('link-row').style.display=selectedType==='article'?'block':'none';
+}
+function submitPost(){
+  var text=document.getElementById('compose-text').value.trim();
+  var link=document.getElementById('compose-link').value.trim();
+  if(!selectedType){showToast('Please pick a category');return;}
+  if(!text&&!composeImage){showToast('Please write something or add a photo');return;}
+  var payload={type:selectedType,body:text||'',image:composeImage||null,link:null};
+  if(selectedType==='article'&&link){payload.link={title:text||link,url:link};payload.body='';}
+  var tempId='temp-'+Date.now();
+  var optimistic={id:tempId,userId:CURRENT_USER?CURRENT_USER.id:null,type:selectedType,user:PROFILE.name||'You',initials:initials(PROFILE.name),
+    av:'av-gold',avatarImg:PROFILE.avatar||null,sub:PROFILE.headline||'',time:'Just now',
+    body:payload.body||null,likes:0,liked:false,comments:[],image:composeImage||null,link:payload.link||null,ownedByMe:true,_pending:true};
+  POSTS.unshift(optimistic);USER_POSTS.unshift(optimistic);
+  saveUserPosts();
+  closeCompose();navTo('home');renderFeed(null);renderProfile();
+  apiCreatePost(payload).then(function(created){
+    if(!created)return;
+    var mapped=mapServerPost(created);
+    mapped.user=PROFILE.name||mapped.user||'You';
+    mapped.initials=initials(PROFILE.name);
+    mapped.avatarImg=PROFILE.avatar||null;
+    mapped.sub=PROFILE.headline||'';
+    USER_POSTS=USER_POSTS.filter(function(p){return p.id!==tempId;});
+    USER_POSTS.unshift(mapped);
+    POSTS_API.unshift(mapped);
+    saveUserPosts();
+    rebuildFeed();
+    renderFeed(activeFilter);
+    renderProfile();
+    showToast('Posted! Your community thanks you.');
+  }).catch(function(err){
+    if(err&&err.status===401){showToast('Please log in again to post');return;}
+    showToast('Saved locally — could not reach server');
+  });
+}
+
+function filterAndGo(type){navTo('home');renderFeed(type);}
+function doSearch(q){
+  if(!q.trim())return;
+  var r=POSTS.filter(function(p){
+    return(p.body&&p.body.toLowerCase().includes(q.toLowerCase()))||
+           (p.link&&p.link.title&&p.link.title.toLowerCase().includes(q.toLowerCase()))||
+           p.user.toLowerCase().includes(q.toLowerCase())||
+           p.type.includes(q.toLowerCase());
+  });
+  navTo('home');
+  document.getElementById('feed-title').textContent='Search results';
+  document.getElementById('feed').innerHTML=r.length
+    ?r.map(function(p){return'<div class="post-card">'+buildPost(p)+'</div>';}).join('')
+    :'<div style="text-align:center;padding:48px 20px;color:var(--bark);font-size:14px;">No results for &ldquo;'+q+'&rdquo;</div>';
+}
+
+function submitSupport(){
+  var msg=document.getElementById('s-msg').value.trim();
+  if(!msg){showToast('Please write a message first');return;}
+  document.getElementById('sup-form').style.display='none';
+  document.getElementById('sup-success').style.display='block';
+}
+function renderProfile(){
+  var avBig=document.getElementById('prof-av-big');
+  var avTxt=document.getElementById('prof-av-txt');
+  var cover=document.getElementById('prof-cover');
+  document.getElementById('prof-name-disp').textContent=PROFILE.name;
+  document.getElementById('prof-handle-disp').textContent=PROFILE.handle;
+  document.getElementById('prof-headline-disp').textContent=PROFILE.headline||'';
+  var bioEl=document.getElementById('prof-bio-disp');
+  bioEl.textContent=PROFILE.bio||'';
+  bioEl.style.display=PROFILE.bio?'block':'none';
+  avTxt.textContent=initials(PROFILE.name);
+  if(PROFILE.avatar){
+    avBig.classList.add('has-image');
+    avBig.style.backgroundImage='url("'+PROFILE.avatar+'")';
+  } else {
+    avBig.classList.remove('has-image');
+    avBig.style.backgroundImage='';
+  }
+  if(PROFILE.cover){
+    cover.style.backgroundImage='url("'+PROFILE.cover+'")';
+    document.getElementById('cover-edit-label').textContent='Change cover';
+  } else {
+    cover.style.backgroundImage='';
+    document.getElementById('cover-edit-label').textContent='Add cover';
+  }
+  var meta='';
+  if(PROFILE.location){
+    meta+='<div class="prof-meta-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'+escapeHtml(PROFILE.location)+'</div>';
+  }
+  meta+='<div class="prof-meta-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Joined '+formatJoined(PROFILE.joined)+'</div>';
+  document.getElementById('prof-meta-row').innerHTML=meta;
+  var myCount=POSTS.filter(function(p){return p.ownedByMe;}).length;
+  document.getElementById('post-count').textContent=myCount;
+  var i=initials(PROFILE.name);
+  var ca=document.getElementById('compose-av');if(ca)ca.textContent=i;
+  var cma=document.getElementById('comment-av');if(cma)cma.textContent=i;
+  renderProfileTab();
+}
+
+function initials(name){
+  if(!name)return'ME';
+  var parts=name.trim().split(/\s+/);
+  if(parts.length>=2)return(parts[0][0]+parts[1][0]).toUpperCase();
+  return parts[0].slice(0,2).toUpperCase();
+}
+
+function formatJoined(iso){
+  try{var d=new Date(iso+'-01');return d.toLocaleString('en-US',{month:'long',year:'numeric'});}
+  catch(e){return iso;}
+}
+
+function escapeHtml(s){
+  if(s==null)return'';
+  return String(s).replace(/[&<>"']/g,function(c){
+    return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+function escapeAttr(s){return escapeHtml(s);}
+
+function switchProfTab(tab){
+  activeProfTab=tab;
+  document.querySelectorAll('.prof-tab').forEach(function(t){
+    t.classList.toggle('active',t.dataset.ptab===tab);
+  });
+  document.getElementById('prof-tab-posts').style.display=tab==='posts'?'':'none';
+  document.getElementById('prof-tab-photos').style.display=tab==='photos'?'':'none';
+  document.getElementById('prof-tab-about').style.display=tab==='about'?'':'none';
+  renderProfileTab();
+}
+
+function renderProfileTab(){
+  var my=POSTS.filter(function(p){return p.ownedByMe;});
+  var pt=document.getElementById('prof-tab-posts');
+  if(my.length){
+    pt.innerHTML='<div style="padding:12px 16px 20px;background:var(--cream);">'+my.map(function(p){return'<div class="post-card">'+buildPost(p)+'</div>';}).join('')+'</div>';
+  } else {
+    pt.innerHTML=emptyState('No posts yet','Share your first tip, story, or prayer with the community.','post');
+  }
+  var photos=my.filter(function(p){return p.image;});
+  var ph=document.getElementById('prof-tab-photos');
+  if(photos.length){
+    ph.innerHTML='<div class="photo-grid">'+photos.map(function(p){
+      return'<div class="photo-grid-item" style="background-image:url(\''+p.image+'\');" onclick="showPhoto(\''+escapeAttr(String(p.id))+'\')"></div>';
+    }).join('')+'</div>';
+  } else {
+    ph.innerHTML=emptyState('No photos yet','Add a photo to your next post and it will show up here.','photo');
+  }
+  var ab=document.getElementById('prof-tab-about');
+  var bio=PROFILE.bio?'<p>'+escapeHtml(PROFILE.bio).replace(/\n/g,'<br>')+'</p>':'<p class="about-card-empty">No bio yet. Tap "Edit profile" to add one.</p>';
+  var details='';
+  if(PROFILE.headline){
+    details+='<div class="about-row"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'+escapeHtml(PROFILE.headline)+'</div>';
+  }
+  if(PROFILE.location){
+    details+='<div class="about-row"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'+escapeHtml(PROFILE.location)+'</div>';
+  }
+  details+='<div class="about-row"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Joined '+formatJoined(PROFILE.joined)+'</div>';
+  ab.innerHTML=
+    '<div class="about-wrap">'
+    +'<div class="about-card"><h5>About</h5>'+bio+'</div>'
+    +'<div class="about-card"><h5>Details</h5>'+details+'</div>'
+    +'<div class="psec-title" style="margin-top:6px;">Settings</div>'
+    +'<div class="settings-group" style="margin-bottom:0;">'
+      +'<div class="settings-row" onclick="showToast(\'Notifications coming in v1.1\')">'
+        +'<div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>'
+        +'<span class="row-label">Notifications</span>'
+        +'<svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>'
+      +'</div>'
+      +'<div class="settings-row" onclick="showToast(\'Privacy settings coming in v1.1\')">'
+        +'<div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>'
+        +'<span class="row-label">Privacy &amp; safety</span>'
+        +'<svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>'
+      +'</div>'
+      +'<div class="settings-row" onclick="showToast(\'StomaLink v2.0 — Made with faith &amp; love\')">'
+        +'<div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>'
+        +'<span class="row-label">About StomaLink</span>'
+        +'<svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>'
+      +'</div>'
+    +'</div>'
+    +'<p class="prof-footer">StomaLink v2.0 · Community, Faith &amp; Strength<br/>zmurphy@gutsycare.com</p>'
+    +'</div>';
+}
+
+function emptyState(title,subtitle,type){
+  var icon=type==='photo'
+    ?'<svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'
+    :'<svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>';
+  return'<div class="empty-tab"><div class="empty-icon">'+icon+'</div><h4>'+escapeHtml(title)+'</h4><p>'+escapeHtml(subtitle)+'</p></div>';
+}
+
+function openEditProfile(){
+  document.getElementById('edit-name').value=PROFILE.name;
+  document.getElementById('edit-handle').value=PROFILE.handle;
+  document.getElementById('edit-headline').value=PROFILE.headline||'';
+  document.getElementById('edit-bio').value=PROFILE.bio||'';
+  document.getElementById('edit-location').value=PROFILE.location||'';
+  document.getElementById('edit-profile-modal').classList.add('open');
+}
+function closeEditProfile(){document.getElementById('edit-profile-modal').classList.remove('open');}
+function saveEditProfile(){
+  PROFILE.name=document.getElementById('edit-name').value.trim()||'Me';
+  var h=document.getElementById('edit-handle').value.trim();
+  if(h&&!h.startsWith('@'))h='@'+h;
+  PROFILE.handle=h||'@me';
+  PROFILE.headline=document.getElementById('edit-headline').value.trim();
+  PROFILE.bio=document.getElementById('edit-bio').value.trim();
+  PROFILE.location=document.getElementById('edit-location').value.trim();
+  saveProfile();
+  renderProfile();
+  closeEditProfile();
+  showToast('Profile saved');
+}
+
+function handleAvatarUpload(ev){
+  var f=ev.target.files&&ev.target.files[0];
+  if(!f){return;}
+  loadFileAsDataUrl(f,function(dataUrl){openCropper('avatar',dataUrl);});
+  ev.target.value='';
+}
+function handleCoverUpload(ev){
+  var f=ev.target.files&&ev.target.files[0];
+  if(!f){return;}
+  loadFileAsDataUrl(f,function(dataUrl){openCropper('cover',dataUrl);});
+  ev.target.value='';
+}
+function handleCropperReplace(ev){
+  var f=ev.target.files&&ev.target.files[0];
+  if(!f){return;}
+  loadFileAsDataUrl(f,function(dataUrl){
+    CROPPER.src=dataUrl;
+    loadCropperImage(dataUrl);
+  });
+  ev.target.value='';
+}
+function loadFileAsDataUrl(file,cb){
+  if(!file||!file.type||file.type.indexOf('image/')!==0){showToast('That file is not an image');return;}
+  var reader=new FileReader();
+  reader.onload=function(){cb(reader.result);};
+  reader.onerror=function(){showToast('Could not read that file');};
+  reader.readAsDataURL(file);
+}
+
+/* ---- PHOTO ACTION SHEET ---- */
+var PHOTO_TARGET=null;
+function openPhotoSheet(target){
+  PHOTO_TARGET=target;
+  var hasPhoto=target==='avatar'?!!PROFILE.avatar:!!PROFILE.cover;
+  document.getElementById('photo-sheet-title').textContent=target==='avatar'?'Profile photo':'Cover photo';
+  document.getElementById('photo-edit-row').style.display=hasPhoto?'flex':'none';
+  document.getElementById('photo-remove-row').style.display=hasPhoto?'flex':'none';
+  document.getElementById('photo-sheet-modal').classList.add('open');
+}
+function closePhotoSheet(){document.getElementById('photo-sheet-modal').classList.remove('open');}
+function pickNewPhoto(){
+  var t=PHOTO_TARGET;closePhotoSheet();
+  document.getElementById(t==='avatar'?'avatar-upload':'cover-upload').click();
+}
+function editCurrentPhoto(){
+  var t=PHOTO_TARGET;
+  var src=t==='avatar'?PROFILE.avatar:PROFILE.cover;
+  if(!src){pickNewPhoto();return;}
+  closePhotoSheet();
+  openCropper(t,src);
+}
+function removeCurrentPhoto(){
+  var t=PHOTO_TARGET;closePhotoSheet();
+  if(t==='avatar'){PROFILE.avatar=null;}else{PROFILE.cover=null;}
+  saveProfile();renderProfile();
+  showToast(t==='avatar'?'Profile photo removed':'Cover photo removed');
+}
+
+/* ---- IMAGE CROPPER ---- */
+var CROPPER={src:null,img:null,target:null,cropW:0,cropH:0,outW:400,outH:400,zoom:1,x:0,y:0,baseScale:1,shape:'circle',touching:false,lastX:0,lastY:0,pinchDist:0,pinchZoomStart:1};
+function openCropper(target,src){
+  CROPPER.target=target;
+  CROPPER.src=src;
+  var mask=document.getElementById('cropper-mask');
+  if(target==='avatar'){
+    CROPPER.outW=400;CROPPER.outH=400;CROPPER.shape='circle';
+    mask.className='cropper-mask cropper-mask-circle';
+    document.getElementById('cropper-title').textContent='Edit profile photo';
+  } else if(target==='compose'){
+    CROPPER.outW=1200;CROPPER.outH=1200;CROPPER.shape='banner';
+    mask.className='cropper-mask cropper-mask-banner';
+    document.getElementById('cropper-title').textContent='Crop photo';
+  } else {
+    CROPPER.outW=1200;CROPPER.outH=420;CROPPER.shape='banner';
+    mask.className='cropper-mask cropper-mask-banner';
+    document.getElementById('cropper-title').textContent='Edit cover photo';
+  }
+  document.getElementById('cropper-modal').classList.add('open');
+  requestAnimationFrame(function(){loadCropperImage(src);});
+}
+function loadCropperImage(src){
+  var stage=document.getElementById('cropper-stage');
+  var sRect=stage.getBoundingClientRect();
+  var sW=sRect.width,sH=sRect.height;
+  var pad=24;
+  var cropW,cropH;
+  if(CROPPER.shape==='circle'){
+    var side=Math.min(sW,sH)-pad*2;
+    if(side<120)side=Math.min(sW,sH)-16;
+    cropW=side;cropH=side;
+    document.getElementById('cropper-mask').style.setProperty('--cropR',(side/2)+'px');
+  } else {
+    var ratio=CROPPER.outW/CROPPER.outH;
+    cropW=sW-pad*2;cropH=cropW/ratio;
+    if(cropH>sH-pad*2){cropH=sH-pad*2;cropW=cropH*ratio;}
+    var mk=document.getElementById('cropper-mask');
+    mk.style.setProperty('--cropW',cropW+'px');
+    mk.style.setProperty('--cropH',cropH+'px');
+  }
+  CROPPER.cropW=cropW;CROPPER.cropH=cropH;
+  var crop=document.getElementById('cropper-crop');
+  crop.style.width=cropW+'px';
+  crop.style.height=cropH+'px';
+  if(CROPPER.shape==='circle'){crop.style.borderRadius='50%';}else{crop.style.borderRadius='0';}
+  var img=new Image();
+  img.onload=function(){
+    CROPPER.img=img;
+    var iw=img.naturalWidth,ih=img.naturalHeight;
+    CROPPER.baseScale=Math.max(cropW/iw,cropH/ih);
+    CROPPER.zoom=1;CROPPER.x=0;CROPPER.y=0;
+    document.getElementById('cropper-zoom').value=1;
+    var preview=document.getElementById('cropper-img');
+    preview.src=src;
+    preview.style.width=(iw*CROPPER.baseScale)+'px';
+    preview.style.height=(ih*CROPPER.baseScale)+'px';
+    applyCropperTransform();
+  };
+  img.onerror=function(){showToast('Could not load that image');closeCropper();};
+  img.src=src;
+}
+function applyCropperTransform(){
+  clampCropperOffsets();
+  var el=document.getElementById('cropper-img');
+  if(!el)return;
+  el.style.transform='translate(-50%,-50%) translate('+CROPPER.x+'px,'+CROPPER.y+'px) scale('+CROPPER.zoom+')';
+}
+function clampCropperOffsets(){
+  var img=CROPPER.img;if(!img)return;
+  var dW=img.naturalWidth*CROPPER.baseScale*CROPPER.zoom;
+  var dH=img.naturalHeight*CROPPER.baseScale*CROPPER.zoom;
+  var maxX=Math.max(0,(dW-CROPPER.cropW)/2);
+  var maxY=Math.max(0,(dH-CROPPER.cropH)/2);
+  if(CROPPER.x>maxX)CROPPER.x=maxX;
+  if(CROPPER.x<-maxX)CROPPER.x=-maxX;
+  if(CROPPER.y>maxY)CROPPER.y=maxY;
+  if(CROPPER.y<-maxY)CROPPER.y=-maxY;
+}
+function closeCropper(){
+  document.getElementById('cropper-modal').classList.remove('open');
+  CROPPER.img=null;CROPPER.src=null;
+  var preview=document.getElementById('cropper-img');
+  if(preview){preview.src='';preview.style.width='';preview.style.height='';preview.style.transform='';}
+}
+function saveCropper(){
+  var img=CROPPER.img;if(!img){closeCropper();return;}
+  var scale=CROPPER.baseScale*CROPPER.zoom;
+  var sx0=img.naturalWidth/2-(CROPPER.cropW/2+CROPPER.x)/scale;
+  var sy0=img.naturalHeight/2-(CROPPER.cropH/2+CROPPER.y)/scale;
+  var sW=CROPPER.cropW/scale,sH=CROPPER.cropH/scale;
+  if(sx0<0){sW+=sx0;sx0=0;}
+  if(sy0<0){sH+=sy0;sy0=0;}
+  if(sx0+sW>img.naturalWidth)sW=img.naturalWidth-sx0;
+  if(sy0+sH>img.naturalHeight)sH=img.naturalHeight-sy0;
+  var canvas=document.createElement('canvas');
+  canvas.width=CROPPER.outW;canvas.height=CROPPER.outH;
+  var ctx=canvas.getContext('2d');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+  try{
+    ctx.drawImage(img,sx0,sy0,sW,sH,0,0,CROPPER.outW,CROPPER.outH);
+    var dataUrl=canvas.toDataURL('image/jpeg',0.9);
+    if(CROPPER.target==='avatar'){PROFILE.avatar=dataUrl;showToast('Profile photo updated');saveProfile();renderProfile();}
+    else if(CROPPER.target==='compose'){
+      composeImage=dataUrl;
+      var prev=document.getElementById('compose-image-preview');
+      if(prev)prev.src=dataUrl;
+      var wrap=document.getElementById('compose-image-wrap');
+      if(wrap)wrap.style.display='block';
+    }
+    else{PROFILE.cover=dataUrl;showToast('Cover photo updated');saveProfile();renderProfile();}
+    closeCropper();
+  } catch(e){showToast('Could not save that photo');}
+}
+function initCropperInteractions(){
+  var stage=document.getElementById('cropper-stage');
+  if(!stage)return;
+  function getPoint(e){
+    if(e.touches&&e.touches.length>0)return{x:e.touches[0].clientX,y:e.touches[0].clientY};
+    return{x:e.clientX,y:e.clientY};
+  }
+  function pDist(t){var dx=t[0].clientX-t[1].clientX,dy=t[0].clientY-t[1].clientY;return Math.sqrt(dx*dx+dy*dy);}
+  function onStart(e){
+    if(!CROPPER.img)return;
+    e.preventDefault();
+    CROPPER.touching=true;
+    if(e.touches&&e.touches.length===2){
+      CROPPER.pinchDist=pDist(e.touches);
+      CROPPER.pinchZoomStart=CROPPER.zoom;
+      return;
+    }
+    var pt=getPoint(e);
+    CROPPER.lastX=pt.x;CROPPER.lastY=pt.y;
+  }
+  function onMove(e){
+    if(!CROPPER.touching||!CROPPER.img)return;
+    e.preventDefault();
+    if(e.touches&&e.touches.length===2){
+      var d=pDist(e.touches);
+      if(CROPPER.pinchDist>0){
+        var nz=CROPPER.pinchZoomStart*(d/CROPPER.pinchDist);
+        CROPPER.zoom=Math.max(1,Math.min(3,nz));
+        document.getElementById('cropper-zoom').value=CROPPER.zoom;
+        applyCropperTransform();
+      }
+      return;
+    }
+    var pt=getPoint(e);
+    CROPPER.x+=pt.x-CROPPER.lastX;
+    CROPPER.y+=pt.y-CROPPER.lastY;
+    CROPPER.lastX=pt.x;CROPPER.lastY=pt.y;
+    applyCropperTransform();
+  }
+  function onEnd(){CROPPER.touching=false;CROPPER.pinchDist=0;}
+  stage.addEventListener('mousedown',onStart);
+  window.addEventListener('mousemove',onMove);
+  window.addEventListener('mouseup',onEnd);
+  stage.addEventListener('touchstart',onStart,{passive:false});
+  stage.addEventListener('touchmove',onMove,{passive:false});
+  stage.addEventListener('touchend',onEnd);
+  stage.addEventListener('touchcancel',onEnd);
+  stage.addEventListener('wheel',function(e){
+    if(!CROPPER.img)return;
+    e.preventDefault();
+    var nz=CROPPER.zoom*(e.deltaY<0?1.06:1/1.06);
+    CROPPER.zoom=Math.max(1,Math.min(3,nz));
+    document.getElementById('cropper-zoom').value=CROPPER.zoom;
+    applyCropperTransform();
+  },{passive:false});
+  document.getElementById('cropper-zoom').addEventListener('input',function(){
+    CROPPER.zoom=parseFloat(this.value);
+    applyCropperTransform();
+  });
+}
+initCropperInteractions();
+
+function handleComposeImage(ev){
+  var f=ev.target.files&&ev.target.files[0];
+  if(!f){return;}
+  resizeImage(f,1600,function(dataUrl){
+    openCropper('compose',dataUrl);
+  });
+  ev.target.value='';
+}
+function clearComposeImage(){
+  composeImage=null;
+  var el=document.getElementById('compose-image-wrap');
+  if(el)el.style.display='none';
+  var prev=document.getElementById('compose-image-preview');
+  if(prev)prev.src='';
+}
+function resizeImage(file,maxSize,cb){
+  if(!file||!file.type||file.type.indexOf('image/')!==0){showToast('That file is not an image');return;}
+  var reader=new FileReader();
+  reader.onload=function(){
+    var img=new Image();
+    img.onload=function(){
+      var w=img.width,h=img.height;
+      if(w>maxSize||h>maxSize){
+        if(w>h){h=Math.round(h*maxSize/w);w=maxSize;}
+        else{w=Math.round(w*maxSize/h);h=maxSize;}
+      }
+      var canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      try{cb(canvas.toDataURL('image/jpeg',0.82));}
+      catch(e){showToast('Could not process that image');}
+    };
+    img.onerror=function(){showToast('Could not load that image');};
+    img.src=reader.result;
+  };
+  reader.onerror=function(){showToast('Could not read that file');};
+  reader.readAsDataURL(file);
+}
+
+function shareProfile(){
+  var url=window.location.href.split('?')[0];
+  var data={title:'StomaLink — '+PROFILE.name,text:PROFILE.bio||'Find me on StomaLink',url:url};
+  if(navigator.share){
+    navigator.share(data).catch(function(){});
+  } else if(navigator.clipboard){
+    navigator.clipboard.writeText(url).then(function(){showToast('Profile link copied');});
+  } else {
+    showToast('Profile link copied');
+  }
+}
+
+function showPhoto(id){
+  var p=POSTS.find(function(x){return String(x.id)===String(id);});
+  if(!p)return;
+  navTo('home');
+  document.getElementById('feed-title').textContent='Post';
+  document.getElementById('feed').innerHTML='<div class="post-card">'+buildPost(p)+'</div>';
+}
+
+function openUserProfile(userId){
+  if(!userId)return;
+  if(CURRENT_USER&&userId===CURRENT_USER.id){navTo('profile');return;}
+  VIEWED_USER={id:userId,profile:null,posts:null};
+  navTo('user');
+  document.getElementById('user-page-title').textContent='Profile';
+  document.getElementById('user-page-content').innerHTML='<div class="user-page-loading">Loading profile…</div>';
+  var cached=USER_CACHE[userId];
+  if(cached){renderUserProfile(cached,null);}
+  Promise.all([apiGetProfileById(userId),apiListPostsByUser(userId)])
+    .then(function(r){
+      var p=r[0];var posts=(r[1]||[]).map(mapServerPost);
+      posts.forEach(function(x){
+        x.user=(p&&p.name)||'StomaLink user';
+        x.initials=initials(p&&p.name);
+        x.avatarImg=(p&&p.avatar)||null;
+        x.sub=(p&&p.headline)||'';
+      });
+      if(p)USER_CACHE[userId]=p;
+      if(!VIEWED_USER||VIEWED_USER.id!==userId)return;
+      VIEWED_USER.profile=p;VIEWED_USER.posts=posts;
+      renderUserProfile(p,posts);
+    })
+    .catch(function(){
+      document.getElementById('user-page-content').innerHTML='<div class="user-page-loading">Could not load this profile.</div>';
+    });
+}
+function closeUserProfile(){
+  VIEWED_USER=null;
+  navTo('home');
+}
+function renderUserProfile(p,posts){
+  if(!p){
+    document.getElementById('user-page-content').innerHTML='<div class="user-page-loading">This member has not set up a profile yet.</div>';
+    return;
+  }
+  var name=p.name||'StomaLink user';
+  document.getElementById('user-page-title').textContent=name;
+  var coverStyle=p.cover?'background-image:url(\''+escapeAttr(p.cover)+'\');':'';
+  var avStyle=p.avatar?'background-image:url(\''+escapeAttr(p.avatar)+'\');background-color:#fff;':'';
+  var inits=initials(name);
+  var meta='';
+  if(p.location){
+    meta+='<div class="prof-meta-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>'+escapeHtml(p.location)+'</div>';
+  }
+  if(p.joined){
+    meta+='<div class="prof-meta-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Joined '+formatJoined(p.joined)+'</div>';
+  }
+  var postCount=(posts&&posts.length)||0;
+  var bio=p.bio?'<div class="prof-bio" style="margin-top:10px;">'+escapeHtml(p.bio).replace(/\n/g,'<br>')+'</div>':'';
+  var headline=p.headline?'<div class="prof-headline">'+escapeHtml(p.headline)+'</div>':'';
+  var handle=p.handle?'<div class="prof-handle">'+escapeHtml(p.handle)+'</div>':'';
+  var postsHtml;
+  if(posts===null){
+    postsHtml='<div class="user-page-loading">Loading posts…</div>';
+  } else if(!posts.length){
+    postsHtml=emptyState('No posts yet','This member has not posted anything yet.','post');
+  } else {
+    postsHtml='<div style="padding:12px 16px 32px;background:var(--cream);">'+posts.map(function(x){return'<div class="post-card">'+buildPost(x)+'</div>';}).join('')+'</div>';
+  }
+  var html=''
+    +'<div class="prof-cover" style="'+coverStyle+'"></div>'
+    +'<div class="prof-ident">'
+      +'<div class="prof-av-wrap"><div class="prof-av-big'+(p.avatar?' has-image':'')+'" style="'+avStyle+'"><span>'+escapeHtml(inits)+'</span></div></div>'
+      +'<div class="prof-ident-meta">'
+        +'<div class="prof-name-row"><div class="prof-name-big">'+escapeHtml(name)+'</div>'+handle+'</div>'
+        +headline
+        +bio
+        +'<div class="prof-meta-row">'+meta+'</div>'
+        +'<div class="prof-stats-new">'
+          +'<div class="pstat"><span class="pstat-n">'+postCount+'</span><span class="pstat-l">Post'+(postCount===1?'':'s')+'</span></div>'
+        +'</div>'
+      +'</div>'
+    +'</div>'
+    +postsHtml;
+  document.getElementById('user-page-content').innerHTML=html;
+}
+
+function showToast(msg){
+  var el=document.getElementById('toast-el');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){el.classList.remove('show');},2800);
+}
+
+// Register service worker for PWA offline support
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
