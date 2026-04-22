@@ -2066,8 +2066,14 @@ function renderUserProfile(p,posts){
         +bio
         +'<div class="prof-meta-row">'+meta+'</div>'
         +'<div class="prof-stats-new">'
-          +'<div class="pstat"><span class="pstat-n">'+postCount+'</span><span class="pstat-l">Post'+(postCount===1?'':'s')+'</span></div>'
-        +'</div>'
+  +'<div class="pstat"><span class="pstat-n">'+postCount+'</span><span class="pstat-l">Post'+(postCount===1?'':'s')+'</span></div>'
+  +'<div class="pstat" id="user-follower-count-'+escapeAttr(p.id)+'"><span class="pstat-n">0</span><span class="pstat-l">Followers</span></div>'
+  +'<div class="pstat" id="user-following-count-'+escapeAttr(p.id)+'"><span class="pstat-n">0</span><span class="pstat-l">Following</span></div>'
++'</div>'
++'<div class="prof-actions" style="margin-top:16px;">'
+  +'<button class="prof-btn prof-btn-primary" id="follow-btn-'+escapeAttr(p.id)+'" onclick="toggleFollow(\''+escapeAttr(p.id)+'\')">'
+  +'Follow</button>'
++'</div>'
       +'</div>'
     +'</div>'
     +postsHtml;
