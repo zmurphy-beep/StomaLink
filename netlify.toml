@@ -5,7 +5,7 @@ redirectsOrigin = "config"
 plugins = []
 
 [build]
-publish = "/opt/build/repo/dist"
+publish = "."
 publishOrigin = "config"
 commandOrigin = "config"
 command = ""
