@@ -1100,7 +1100,37 @@ function onUserSignedOut() {
 }
 
 
-
+function apiGetProfile() {
+  if (!CURRENT_USER) return Promise.resolve(null);
+  return window.sb.from('profiles').select('*').eq('id', CURRENT_USER.id).single()
+    .then(function(r) { return r.data || null; });
+}
+function apiGetProfileById(userId) {
+  return window.sb.from('profiles').select('*').eq('id', userId).single()
+    .then(function(r) { return r.data || null; });
+}
+function apiListPosts() {
+  return window.sb.from('posts').select('*').order('created_at', { ascending: false })
+    .then(function(r) { return r.data || []; });
+}
+function apiListPostsByUser(userId) {
+  return window.sb.from('posts').select('*').eq('user_id', userId).order('created_at', { ascending: false })
+    .then(function(r) { return r.data || []; });
+}
+function apiPutProfile(profile) {
+  if (!CURRENT_USER) return Promise.resolve(null);
+  return window.sb.from('profiles').upsert({
+    id: CURRENT_USER.id,
+    name: profile.name,
+    handle: profile.handle,
+    headline: profile.headline,
+    bio: profile.bio,
+    location: profile.location,
+    avatar: profile.avatar,
+    cover: profile.cover,
+    joined: profile.joined
+  }).then(function(r) { return r.data; });
+}
 async function submitAuth(event) {
   event.preventDefault();
   clearAuthMsg();
