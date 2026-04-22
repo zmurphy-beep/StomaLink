@@ -8,7 +8,7 @@ plugins = []
 publish = "/opt/build/repo/dist"
 publishOrigin = "config"
 commandOrigin = "config"
-command = "npm run build"
+command = ""
 functions = "/opt/build/repo/netlify/functions"
 
   [build.environment]
