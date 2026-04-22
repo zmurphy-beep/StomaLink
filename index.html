@@ -1347,25 +1347,63 @@ function submitPost(){
   POSTS.unshift(optimistic);USER_POSTS.unshift(optimistic);
   saveUserPosts();
   closeCompose();navTo('home');renderFeed(null);renderProfile();
-  apiCreatePost(payload).then(function(created){
-    if(!created)return;
-    var mapped=mapServerPost(created);
-    mapped.user=PROFILE.name||mapped.user||'You';
-    mapped.initials=initials(PROFILE.name);
-    mapped.avatarImg=PROFILE.avatar||null;
-    mapped.sub=PROFILE.headline||'';
-    USER_POSTS=USER_POSTS.filter(function(p){return p.id!==tempId;});
-    USER_POSTS.unshift(mapped);
-    POSTS_API.unshift(mapped);
-    saveUserPosts();
-    rebuildFeed();
-    renderFeed(activeFilter);
-    renderProfile();
-    showToast('Posted! Your community thanks you.');
-  }).catch(function(err){
-    if(err&&err.status===401){showToast('Please log in again to post');return;}
-    showToast('Saved locally — could not reach server');
-  });
+ supabase.auth.getUser().then(function(res){
+  var user=res&&res.data&&res.data.user;
+  if(!user){showToast('Please log in again to post');return;}
+
+  var categoryMap={
+    faith:'Faith & Prayer',
+    product:'Product Review',
+    tip:'Tips & Tricks',
+    story:'My Story',
+    article:'Article',
+    question:'Question'
+  };
+
+  return supabase.from('posts').insert({
+    user_id:user.id,
+    category:categoryMap[selectedType]||'My Story',
+    body:payload.body||'',
+    article_url:payload.link&&payload.link.url ? payload.link.url : null
+  }).select().single();
+}).then(function(result){
+  if(!result||!result.data)return;
+
+  var created=result.data;
+
+  var mapped={
+    id:created.id,
+    userId:created.user_id,
+    type:selectedType,
+    user:PROFILE.name||'You',
+    initials:initials(PROFILE.name),
+    avatarImg:PROFILE.avatar||null,
+    av:'av-gold',
+    sub:PROFILE.headline||'',
+    time:'Just now',
+    body:created.body||null,
+    likes:0,
+    liked:false,
+    comments:[],
+    image:null,
+    link:created.article_url ? {title:created.article_url,url:created.article_url} : null,
+    ownedByMe:true,
+    _server:true,
+    _createdAt:created.created_at
+  };
+
+  USER_POSTS=USER_POSTS.filter(function(p){return p.id!==tempId;});
+  USER_POSTS.unshift(mapped);
+  POSTS_API.unshift(mapped);
+  saveUserPosts();
+  rebuildFeed();
+  renderFeed(activeFilter);
+  renderProfile();
+  showToast('Posted! Your community thanks you.');
+}).catch(function(err){
+  console.error(err);
+  showToast(err&&err.message ? err.message : 'Post failed');
+});
 }
 
 function filterAndGo(type){navTo('home');renderFeed(type);}
