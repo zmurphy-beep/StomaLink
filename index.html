@@ -2017,7 +2017,8 @@ function openUserProfile(userId){
       if(p)USER_CACHE[userId]=p;
       if(!VIEWED_USER||VIEWED_USER.id!==userId)return;
       VIEWED_USER.profile=p;VIEWED_USER.posts=posts;
-      renderUserProfile(p,posts);
+      renderUserProfile(p,posts)loadFollowCounts(userId);
+checkIfFollowing(userId);
     })
     .catch(function(){
       document.getElementById('user-page-content').innerHTML='<div class="user-page-loading">Could not load this profile.</div>';
