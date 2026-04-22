@@ -1131,6 +1131,7 @@ function apiPutProfile(profile) {
     joined: profile.joined
   }).then(function(r) { return r.data; });
 }
+
 async function submitAuth(event) {
   event.preventDefault();
   clearAuthMsg();
