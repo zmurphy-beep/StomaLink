@@ -1224,20 +1224,6 @@ window.onload = async function () {
     document.getElementById('splash').classList.add('gone');
   }, 600);
 };
-    
-function handleRecoveryFlow(){
-  var pw=prompt('Reset password\n\nEnter a new password (at least 8 characters):');
-  if(!pw||pw.length<8){
-    alert('Password reset cancelled. You will need to log in with your previous password or request a new reset link.');
-    return window.StomaAuth.logout().then(function(){return null;}).catch(function(){return null;});
-  }
-  return window.StomaAuth.updateUser({password:pw})
-    .then(function(){return window.StomaAuth.getUser();})
-    .catch(function(err){
-      alert('Could not set new password: '+(err&&err.message||'unknown error'));
-      return window.StomaAuth.logout().then(function(){return null;}).catch(function(){return null;});
-    });
-}
 
 function renderDaily(){
   document.getElementById('daily-hero').innerHTML=
