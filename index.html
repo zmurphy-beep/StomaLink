@@ -1157,10 +1157,13 @@ function hideAuthScreen(){
   document.getElementById('auth-screen').classList.add('hidden');
   var lb=document.getElementById('logout-btn');if(lb)lb.style.display='';
 }
-function logout(){
-  if(!window.StomaAuth)return;
-  if(!confirm('Log out of StomaLink?'))return;
-  window.StomaAuth.logout().catch(function(){});
+
+
+
+
+
+async function logout() {
+  await supabase.auth.signOut();
 }
 function onUserSignedIn(user){
   CURRENT_USER=user;
