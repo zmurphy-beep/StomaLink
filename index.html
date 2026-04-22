@@ -1101,6 +1101,36 @@ function onUserSignedOut() {
 
 
 
+async function submitAuth(event) {
+  event.preventDefault();
+  clearAuthMsg();
+  const email = document.getElementById('auth-email').value.trim();
+  const password = document.getElementById('auth-password').value;
+  const btn = document.getElementById('auth-submit');
+  btn.disabled = true;
+
+  try {
+    let result;
+    if (authMode === 'signup') {
+      const name = document.getElementById('auth-name').value.trim();
+      result = await window.sb.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: name } }
+      });
+      if (result.error) throw result.error;
+      showAuthMsg('Account created! Check your email to confirm.', 'success');
+    } else {
+      result = await window.sb.auth.signInWithPassword({ email, password });
+      if (result.error) throw result.error;
+      // onAuthStateChange will handle the rest
+    }
+  } catch (err) {
+    showAuthMsg(err.message || 'Something went wrong.');
+  } finally {
+    btn.disabled = false;
+  }
+}
 
 async function forgotPassword() {
   const email = document.getElementById('auth-email').value.trim();
