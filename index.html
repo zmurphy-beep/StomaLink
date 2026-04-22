@@ -1076,15 +1076,6 @@ function apiPutProfile(p){
   var payload={name:p.name||'',handle:p.handle||'',headline:p.headline||'',bio:p.bio||'',location:p.location||'',joined:p.joined||'',avatar:p.avatar||null,cover:p.cover||null};
   return apiFetch('/.netlify/functions/profile',{method:'PUT',body:JSON.stringify(payload)});
 }
-function apiListPosts(){
-  return apiFetch('/.netlify/functions/posts').then(function(d){return(d&&d.posts)||[];}).catch(function(){return[];});
-}
-function apiListPostsByUser(userId){
-  return apiFetch('/.netlify/functions/posts?userId='+encodeURIComponent(userId)).then(function(d){return(d&&d.posts)||[];}).catch(function(){return[];});
-}
-function apiCreatePost(body){
-  return apiFetch('/.netlify/functions/posts',{method:'POST',body:JSON.stringify(body)}).then(function(d){return d&&d.post;});
-}
 
 function setAuthMode(mode){
   authMode=mode;
