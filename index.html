@@ -2108,13 +2108,13 @@ function toggleFollow(userId) {
 }
 
 function loadFollowCounts(userId) {
-  window.sb.from('follows').select('id', { count: 'exact' })
+  window.sb.from('follows').select('*', { count: 'exact', head: true })
     .eq('following_id', userId)
     .then(function(r) {
       var el = document.getElementById('user-follower-count-' + userId);
       if (el) el.querySelector('.pstat-n').textContent = r.count || 0;
     });
-  window.sb.from('follows').select('id', { count: 'exact' })
+  window.sb.from('follows').select('*', { count: 'exact', head: true })
     .eq('follower_id', userId)
     .then(function(r) {
       var el = document.getElementById('user-following-count-' + userId);
