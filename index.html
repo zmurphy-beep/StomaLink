@@ -2127,10 +2127,14 @@ function checkIfFollowing(userId) {
   window.sb.from('follows').select('id')
     .eq('follower_id', CURRENT_USER.id)
     .eq('following_id', userId)
-    .single()
     .then(function(r) {
       var btn = document.getElementById('follow-btn-' + userId);
-      if (btn && r.data) btn.textContent = 'Unfollow';
+      if (!btn) return;
+      if (r.data && r.data.length > 0) {
+        btn.textContent = 'Unfollow';
+      } else {
+        btn.textContent = 'Follow';
+      }
     }).catch(function() {});
 }
 
