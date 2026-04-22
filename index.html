@@ -1117,33 +1117,18 @@ function handleAuthError(err){
   }
   showAuthMsg((err&&err.message)||'Network error. Please try again.');
 }
-function submitAuth(e){
-  e.preventDefault();
-  if(!window.StomaAuth){showAuthMsg('Authentication is not available right now.');return false;}
-  var email=document.getElementById('auth-email').value.trim();
-  var password=document.getElementById('auth-password').value;
-  var name=document.getElementById('auth-name').value.trim();
-  var btn=document.getElementById('auth-submit');
-  btn.disabled=true;clearAuthMsg();
-  var done=function(){btn.disabled=false;};
-  if(authMode==='signup'){
-    window.StomaAuth.signup(email,password,{full_name:name||email.split('@')[0]})
-      .then(function(user){
-        if(user&&user.emailVerified){
-          showAuthMsg('Account created. Signing you in...','success');
-        }else{
-          showAuthMsg('Check your inbox for a confirmation link, then come back and log in.','success');
-          setAuthMode('login');
-        }
-      })
-      .catch(handleAuthError)
-      .then(done,done);
-  }else{
-    window.StomaAuth.login(email,password)
-      .catch(handleAuthError)
-      .then(done,done);
-  }
-  return false;
+
+
+function onUserSignedOut() {
+  CURRENT_USER = null;
+  PROFILE = emptyProfile();
+  USER_POSTS = [];
+  POSTS_API = [];
+  USER_CACHE = {};
+  USER_PENDING = {};
+  POSTS = POSTS_SEED.slice();
+  showAuthScreen();
+  renderFeed(null);
 }
 function forgotPassword(){
   if(!window.StomaAuth){showAuthMsg('Authentication is not available right now.');return;}
