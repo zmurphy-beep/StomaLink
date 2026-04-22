@@ -1066,16 +1066,6 @@ function apiFetch(path,options){
       return r.json();
     });
 }
-function apiGetProfile(){
-  return apiFetch('/.netlify/functions/profile').then(function(d){return d&&d.profile;}).catch(function(err){if(err&&err.status===404)return null;throw err;});
-}
-function apiGetProfileById(userId){
-  return apiFetch('/.netlify/functions/profile?id='+encodeURIComponent(userId)).then(function(d){return d&&d.profile;});
-}
-function apiPutProfile(p){
-  var payload={name:p.name||'',handle:p.handle||'',headline:p.headline||'',bio:p.bio||'',location:p.location||'',joined:p.joined||'',avatar:p.avatar||null,cover:p.cover||null};
-  return apiFetch('/.netlify/functions/profile',{method:'PUT',body:JSON.stringify(payload)});
-}
 
 function setAuthMode(mode){
   authMode=mode;
