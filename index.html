@@ -1411,7 +1411,7 @@ function submitPost(){
     question:'Question'
   };
 
-  return supabase.from('posts').insert({
+  return window.sb.from('posts').insert({
     user_id:user.id,
     category:categoryMap[selectedType]||'My Story',
     body:payload.body||'',
