@@ -1130,14 +1130,24 @@ function onUserSignedOut() {
   showAuthScreen();
   renderFeed(null);
 }
-function forgotPassword(){
-  if(!window.StomaAuth){showAuthMsg('Authentication is not available right now.');return;}
-  var email=document.getElementById('auth-email').value.trim();
-  if(!email){showAuthMsg('Enter your email above, then tap Forgot password.');return;}
-  clearAuthMsg();
-  window.StomaAuth.requestPasswordRecovery(email)
-    .then(function(){showAuthMsg('If an account exists for that email, a reset link has been sent.','success');})
-    .catch(handleAuthError);
+
+
+
+
+async function forgotPassword() {
+  const email = document.getElementById('auth-email').value.trim();
+  if (!email) {
+    showAuthMsg('Enter your email above first.');
+    return;
+  }
+
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) throw error;
+    showAuthMsg('Password reset email sent.', 'success');
+  } catch (err) {
+    showAuthMsg(err.message || 'Could not send reset email.');
+  }
 }
 function showAuthScreen(){
   document.getElementById('auth-screen').classList.remove('hidden');
