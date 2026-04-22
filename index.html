@@ -1109,7 +1109,7 @@ async function forgotPassword() {
   }
 
   try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await window.sb.from(.resetPasswordForEmail(email);
     if (error) throw error;
     showAuthMsg('Password reset email sent.', 'success');
   } catch (err) {
