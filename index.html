@@ -810,7 +810,7 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
 <script>
   const SUPABASE_URL = "https://mipuebqxmxdqmgrdhyst.supabase.co/rest/v1/";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pcHVlYnF4bXhkcW1ncmRoeXN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3Mjk1MDgsImV4cCI6MjA5MjMwNTUwOH0.WeKDhOtGBQS56_jRVEfvOQ3lGFlxSTR4QxkNaT0htLo";
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  window.sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 </script>
 var VERSES=[
   {text:'"I can do all things through Christ who strengthens me."',ref:'Philippians 4:13'},
