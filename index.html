@@ -2079,7 +2079,74 @@ function renderUserProfile(p,posts){
     +postsHtml;
   document.getElementById('user-page-content').innerHTML=html;
 }
+function toggleFollow(userId) {
+  if (!CURRENT_USER) { showToast('Sign in to follow people'); return; }
+  var btn = document.getElementById('follow-btn-' + userId);
+  var isFollowing = btn && btn.textContent.trim() === 'Unfollow';
+  if (isFollowing) {
+    window.sb.from('follows').delete()
+      .eq('follower_id', CURRENT_USER.id)
+      .eq('following_id', userId)
+      .then(function() {
+        if (btn) btn.textContent = 'Follow';
+        if (btn) btn.classList.remove('prof-btn-secondary');
+        loadFollowCounts(userId);
+        loadMyFollowingCount();
+      });
+  } else {
+    window.sb.from('follows').insert({
+      follower_id: CURRENT_USER.id,
+      following_id: userId
+    }).then(function() {
+      if (btn) btn.textContent = 'Unfollow';
+      loadFollowCounts(userId);
+      loadMyFollowingCount();
+    });
+  }
+}
 
+function loadFollowCounts(userId) {
+  window.sb.from('follows').select('id', { count: 'exact' })
+    .eq('following_id', userId)
+    .then(function(r) {
+      var el = document.getElementById('user-follower-count-' + userId);
+      if (el) el.querySelector('.pstat-n').textContent = r.count || 0;
+    });
+  window.sb.from('follows').select('id', { count: 'exact' })
+    .eq('follower_id', userId)
+    .then(function(r) {
+      var el = document.getElementById('user-following-count-' + userId);
+      if (el) el.querySelector('.pstat-n').textContent = r.count || 0;
+    });
+}
+
+function checkIfFollowing(userId) {
+  if (!CURRENT_USER) return;
+  window.sb.from('follows').select('id')
+    .eq('follower_id', CURRENT_USER.id)
+    .eq('following_id', userId)
+    .single()
+    .then(function(r) {
+      var btn = document.getElementById('follow-btn-' + userId);
+      if (btn && r.data) btn.textContent = 'Unfollow';
+    }).catch(function() {});
+}
+
+function loadMyFollowingCount() {
+  if (!CURRENT_USER) return;
+  window.sb.from('follows').select('id', { count: 'exact' })
+    .eq('follower_id', CURRENT_USER.id)
+    .then(function(r) {
+      var el = document.getElementById('following-count');
+      if (el) el.textContent = r.count || 0;
+    });
+  window.sb.from('follows').select('id', { count: 'exact' })
+    .eq('following_id', CURRENT_USER.id)
+    .then(function(r) {
+      var el = document.getElementById('follower-count');
+      if (el) el.textContent = r.count || 0;
+    });
+}
 function showToast(msg){
   var el=document.getElementById('toast-el');
   el.textContent=msg;el.classList.add('show');
