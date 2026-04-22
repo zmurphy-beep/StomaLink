@@ -1130,8 +1130,9 @@ function hideAuthScreen(){
 
 
 async function logout() {
-  await supabase.auth.signOut();
+  await window.sb.auth.signOut();
 }
+
 function onUserSignedIn(user){
   CURRENT_USER=user;
   initUserSession();
