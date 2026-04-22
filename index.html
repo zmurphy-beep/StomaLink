@@ -1187,35 +1187,41 @@ function onUserSignedOut(){
   showAuthScreen();
 }
 
-window.onload=function(){
-  if(!window.StomaAuth){
-    showAuthScreen();
-    showAuthMsg('Authentication module failed to load. Run the site via "netlify dev" or deploy to Netlify to enable sign in.');
-    setTimeout(function(){document.getElementById('splash').classList.add('gone');},600);
-    return;
-  }
-  var E=window.StomaAuth.AUTH_EVENTS;
-  window.StomaAuth.onAuthChange(function(ev,user){
-    if(ev===E.LOGIN)onUserSignedIn(user);
-    else if(ev===E.LOGOUT)onUserSignedOut();
-  });
-  Promise.resolve()
-    .then(function(){return window.StomaAuth.handleAuthCallback();})
-    .catch(function(){return null;})
-    .then(function(cb){
-      if(cb&&cb.type==='recovery'){
-        return handleRecoveryFlow();
-      }
-      return window.StomaAuth.getUser();
-    })
-    .catch(function(){return null;})
-    .then(function(user){
-      if(user)onUserSignedIn(user);
-      else onUserSignedOut();
-      setTimeout(function(){document.getElementById('splash').classList.add('gone');},600);
-    });
-};
 
+
+
+window.onload = async function () {
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+
+  if (user) {
+    onUserSignedIn({
+      id: user.id,
+      email: user.email,
+      name: user.user_metadata?.full_name || user.email.split('@')[0]
+    });
+  } else {
+    onUserSignedOut();
+  }
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    const u = session?.user;
+    if (u) {
+      onUserSignedIn({
+        id: u.id,
+        email: u.email,
+        name: u.user_metadata?.full_name || u.email.split('@')[0]
+      });
+    } else {
+      onUserSignedOut();
+    }
+  });
+
+  setTimeout(function () {
+    document.getElementById('splash').classList.add('gone');
+  }, 600);
+};
+    
 function handleRecoveryFlow(){
   var pw=prompt('Reset password\n\nEnter a new password (at least 8 characters):');
   if(!pw||pw.length<8){
