@@ -1175,7 +1175,7 @@ window.onload = async function () {
     onUserSignedOut();
   }
 
-  supabase.auth.onAuthStateChange((event, session) => {
+    window.sb.auth.onAuthStateChange((event, session) => {
     const u = session?.user;
     if (u) {
       onUserSignedIn({
