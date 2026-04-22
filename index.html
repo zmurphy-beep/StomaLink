@@ -1398,7 +1398,7 @@ function submitPost(){
   POSTS.unshift(optimistic);USER_POSTS.unshift(optimistic);
   saveUserPosts();
   closeCompose();navTo('home');renderFeed(null);renderProfile();
- supabase.auth.getUser().then(function(res){
+ window.sb.auth.getUser().then(function(res){
   var user=res&&res.data&&res.data.user;
   if(!user){showToast('Please log in again to post');return;}
 
