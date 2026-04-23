@@ -1542,7 +1542,6 @@ function doSearch(q) {
 
     resultsEl.innerHTML = html;
   }).catch(function(err){
-  console.error(err);
   showToast(err&&err.message ? err.message : 'Post failed');
 });
 }
