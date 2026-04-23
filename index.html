@@ -609,6 +609,90 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
       <input type="file" id="cover-upload" accept="image/*" style="display:none;" onchange="handleCoverUpload(event)"/>
     </div>
 
+<!-- SETTINGS -->
+<div class="page" id="page-settings">
+  <div class="user-page-topbar">
+    <button class="user-back-btn" onclick="navTo('profile')" aria-label="Back">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="user-page-title">Settings</div>
+  </div>
+  <div style="padding:16px;background:var(--cream);flex:1;overflow-y:auto;">
+
+    <div class="psec-title" style="margin-bottom:12px;">Account</div>
+    <div class="settings-group" style="margin-bottom:20px;">
+      <div class="settings-row" onclick="showChangeEmail()">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <span class="row-label">Change email</span>
+        <svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="settings-row" onclick="showChangePassword()">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <span class="row-label">Change password</span>
+        <svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <div class="psec-title" style="margin-bottom:12px;">Notifications</div>
+    <div class="settings-group" style="margin-bottom:20px;">
+      <div class="settings-row">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <span class="row-label">Push notifications</span>
+        <div id="notif-toggle" onclick="toggleNotifications()" style="width:44px;height:26px;border-radius:13px;background:var(--stone);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;">
+          <div id="notif-thumb" style="position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <span class="row-label">New followers</span>
+        <div id="follower-notif-toggle" onclick="toggleFollowerNotif()" style="width:44px;height:26px;border-radius:13px;background:var(--stone);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;">
+          <div id="follower-notif-thumb" style="position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="psec-title" style="margin-bottom:12px;">Privacy</div>
+    <div class="settings-group" style="margin-bottom:20px;">
+      <div class="settings-row">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span class="row-label">Private account</span>
+        <div id="privacy-toggle" onclick="togglePrivacy()" style="width:44px;height:26px;border-radius:13px;background:var(--stone);position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;">
+          <div id="privacy-thumb" style="position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="psec-title" style="margin-bottom:12px;">About</div>
+    <div class="settings-group" style="margin-bottom:20px;">
+      <div class="settings-row" onclick="showToast('StomaLink v2.0 — Community, Faith & Strength')">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <span class="row-label">About StomaLink</span>
+        <svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="settings-row" onclick="showToast('Version 2.0')">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <span class="row-label">Version 2.0</span>
+        <svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+    <div class="psec-title" style="margin-bottom:12px;">Danger zone</div>
+    <div class="settings-group" style="margin-bottom:20px;">
+      <div class="settings-row" onclick="logout()">
+        <div class="row-icon"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>
+        <span class="row-label">Log out</span>
+        <svg class="row-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="settings-row" onclick="confirmDeleteAccount()" style="color:var(--rust);">
+        <div class="row-icon"><svg fill="none" stroke="var(--rust)" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg></div>
+        <span class="row-label" style="color:var(--rust);">Delete account</span>
+        <svg class="row-arrow" width="16" height="16" fill="none" stroke="var(--rust)" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+
+  </div>
+</div>
+
     <!-- USER PROFILE (viewing another member) -->
     <div class="page" id="page-user">
       <div class="user-page-topbar">
