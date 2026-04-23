@@ -945,6 +945,20 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
     </div>
   </div>
 
+<!-- NOTIFICATIONS MODAL -->
+<div class="modal-bg" id="notifications-modal" onclick="if(event.target===this)closeNotifications()">
+  <div class="modal-sheet" style="max-height:80vh;">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <div class="modal-title">Notifications</div>
+      <button class="modal-close" onclick="closeNotifications()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="notifications-list" style="padding:0 4px;"></div>
+  </div>
+</div>
+
 <!-- CHANGE EMAIL MODAL -->
 <div class="modal-bg" id="change-email-modal" onclick="if(event.target===this)closeChangeEmail()">
   <div class="modal-sheet">
