@@ -1641,7 +1641,7 @@ function submitPost(){
   var payload={type:selectedType,body:text||'',image:composeImage||null,link:null};
   if(selectedType==='article'&&link){payload.link={title:text||link,url:link};payload.body='';}
   var tempId='temp-'+Date.now();
-  var optimistic={id:tempId,userId:CURRENT_USER?CURRENT_USER.id:null,type:selectedType,user:PROFILE.name||'You',initials:initials(PROFILE.name),
+    var optimistic={id:tempId,userId:CURRENT_USER?CURRENT_USER.id:null,type:savedSelectedType,
     av:'av-gold',avatarImg:PROFILE.avatar||null,sub:PROFILE.headline||'',time:'Just now',
     body:payload.body||null,likes:0,liked:false,comments:[],image:composeImage||null,link:payload.link||null,ownedByMe:true,_pending:true};
   POSTS.unshift(optimistic);USER_POSTS.unshift(optimistic);
