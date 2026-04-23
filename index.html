@@ -2523,6 +2523,26 @@ function openFollowList(userId, type) {
 function closeFollowList() {
   document.getElementById('follow-list-modal').classList.remove('open');
 }
+function deletePost(id) {
+  if(!confirm('Delete this post?')) return;
+  var p = POSTS.find(function(x){ return String(x.id)===String(id); });
+  if(!p||!p.ownedByMe) return;
+  POSTS = POSTS.filter(function(x){ return String(x.id)!==String(id); });
+  USER_POSTS = USER_POSTS.filter(function(x){ return String(x.id)!==String(id); });
+  POSTS_API = POSTS_API.filter(function(x){ return String(x.id)!==String(id); });
+  saveUserPosts();
+  renderFeed(activeFilter);
+  renderProfile();
+  if(p._server) {
+    window.sb.from('posts').delete().eq('id', id).then(function(){
+      showToast('Post deleted.');
+    }).catch(function(){
+      showToast('Could not delete from server.');
+    });
+  } else {
+    showToast('Post deleted.');
+  }
+}
 function showToast(msg){
   var el=document.getElementById('toast-el');
   el.textContent=msg;el.classList.add('show');
