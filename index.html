@@ -1660,12 +1660,27 @@ function submitPost(){
     question:'Question'
   };
 
-  return window.sb.from('posts').insert({
+    var insertPayload={
     user_id:user.id,
     category:categoryMap[selectedType]||'My Story',
     body:payload.body||'',
     article_url:payload.link&&payload.link.url ? payload.link.url : null
-  }).select().single();
+  };
+  var imageUploadPromise=Promise.resolve(null);
+  if(composeImage&&composeImage.startsWith('data:')){
+    var blob=dataURLtoBlob(composeImage);
+    var filename=user.id+'/'+Date.now()+'.jpg';
+    imageUploadPromise=window.sb.storage.from('post-images').upload(filename,blob,{
+      contentType:'image/jpeg',upsert:false
+    }).then(function(r){
+      if(r.error)return null;
+      return window.sb.storage.from('post-images').getPublicUrl(filename).data.publicUrl;
+    });
+  }
+  return imageUploadPromise.then(function(imageUrl){
+    if(imageUrl)insertPayload.image_url=imageUrl;
+    return window.sb.from('posts').insert(insertPayload).select().single();
+  });
 }).then(function(result){
   if(!result||!result.data)return;
 
