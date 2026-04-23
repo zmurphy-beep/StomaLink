@@ -573,8 +573,8 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
           <div class="prof-meta-row" id="prof-meta-row"></div>
           <div class="prof-stats-new">
             <div class="pstat"><span class="pstat-n" id="post-count">0</span><span class="pstat-l">Posts</span></div>
-            <div class="pstat"><span class="pstat-n" id="follower-count">0</span><span class="pstat-l">Followers</span></div>
-            <div class="pstat"><span class="pstat-n" id="following-count">0</span><span class="pstat-l">Following</span></div>
+            <div class="pstat" onclick="openFollowList(CURRENT_USER.id,'followers')" style="cursor:pointer;"><span class="pstat-n" id="follower-count">0</span><span class="pstat-l">Followers</span></div>
+<div class="pstat" onclick="openFollowList(CURRENT_USER.id,'following')" style="cursor:pointer;"><span class="pstat-n" id="following-count">0</span><span class="pstat-l">Following</span></div>
           </div>
           <div class="prof-actions">
             <button class="prof-btn prof-btn-primary" onclick="openEditProfile()">
