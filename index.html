@@ -1464,10 +1464,9 @@ function submitPost(){
   renderProfile();
   showToast('Posted! Your community thanks you.');
 }).catch(function(err){
-  console.error(err);
-  showToast(err&&err.message ? err.message : 'Post failed');
+  console.error('POST ERROR:', err);
+  showToast(err&&err.message ? err.message : 'Post failed: '+JSON.stringify(err));
 });
-}
 
 function filterAndGo(type){navTo('home');renderFeed(type);}
 function doSearch(q) {
