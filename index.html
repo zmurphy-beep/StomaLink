@@ -2340,13 +2340,14 @@ function toggleFollow(userId) {
         loadMyFollowingCount();
       });
   } else {
-    window.sb.from('follows').insert({
+        window.sb.from('follows').insert({
       follower_id: CURRENT_USER.id,
       following_id: userId
     }).then(function() {
       if (btn) btn.textContent = 'Unfollow';
       loadFollowCounts(userId);
       loadMyFollowingCount();
+      sendNotification(userId, (PROFILE.name||'Someone') + ' started following you.');
     });
   }
 }
