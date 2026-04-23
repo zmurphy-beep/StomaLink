@@ -2245,8 +2245,12 @@ function renderUserProfile(p,posts){
   +'<div class="pstat" id="user-follower-count-'+escapeAttr(p.id)+'" onclick="openFollowList(\''+escapeAttr(p.id)+'\',\'followers\')" style="cursor:pointer;"><span class="pstat-n">0</span><span class="pstat-l">Followers</span></div>'
 +'<div class="pstat" id="user-following-count-'+escapeAttr(p.id)+'" onclick="openFollowList(\''+escapeAttr(p.id)+'\',\'following\')" style="cursor:pointer;"><span class="pstat-n">0</span><span class="pstat-l">Following</span></div>'
 +'</div>'
-+'<div class="prof-actions" style="margin-top:16px;">'
-  +'<button class="prof-btn prof-btn-primary" id="follow-btn-'+escapeAttr(p.id)+'" onclick="toggleFollow(\''+escapeAttr(p.id)+'\')">'
++'<div class="prof-actions">
+  <button class="prof-btn" onclick="navTo('settings')">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
+  <button class="prof-btn prof-btn-primary" onclick="openEditProfile()">
   +'Follow</button>'
 +'</div>'
       +'</div>'
