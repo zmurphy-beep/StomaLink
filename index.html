@@ -1541,9 +1541,10 @@ function doSearch(q) {
     }
 
     resultsEl.innerHTML = html;
-  }).catch(function(err) {
-    document.getElementById('explore-results').innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Search failed. Try again.</div>';
-  });
+  }).catch(function(err){
+  console.error(err);
+  showToast(err&&err.message ? err.message : 'Post failed');
+});
 }
 
 function renderExploreGrid() {
