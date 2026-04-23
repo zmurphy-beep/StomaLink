@@ -1444,7 +1444,7 @@ window.onload = async function () {
 function renderDaily(){
   document.getElementById('daily-hero').innerHTML=
     '<div class="daily-eyebrow">Today\'s verse</div>'
-    +'<div class="daily-verse">'+VERSE.text+'</div>'
+    +'<div class="daily-verse" onclick="toggleDailyPrayer()" style="cursor:pointer;">'+VERSE.text+'</div>'
     +'<div class="daily-ref">&#8212; '+VERSE.ref+'</div>'
     +'<div id="daily-prayer-wrap" style="display:none;"><div class="daily-prayer"><div class="prayer-label">Daily prayer</div><div class="prayer-text">'+PRAYER+'</div></div></div>';
 }
@@ -2528,6 +2528,10 @@ function deletePost(id) {
   } else {
     showToast('Post deleted.');
   }
+}
+function toggleDailyPrayer(){
+  var el=document.getElementById('daily-prayer-wrap');
+  if(el)el.style.display=el.style.display==='none'?'block':'none';
 }
 function showToast(msg){
   var el=document.getElementById('toast-el');
