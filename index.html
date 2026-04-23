@@ -1200,7 +1200,7 @@ function onUserSignedIn(user){
   window.sb.from('profiles').select('id').eq('id',user.id).single()
     .then(function(r){
       if(!r.data){
-        window.sb.from('profiles').insert({
+                window.sb.from('profiles').upsert({
           id:user.id,
           name:user.name||user.email.split('@')[0],
           handle:'@'+user.email.split('@')[0].replace(/[^a-zA-Z0-9_]/g,''),
