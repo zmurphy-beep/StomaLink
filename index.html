@@ -1541,9 +1541,9 @@ function doSearch(q) {
     }
 
     resultsEl.innerHTML = html;
-  }).catch(function(err){
-  showToast(err&&err.message ? err.message : 'Post failed');
-});
+    }).catch(function() {
+    document.getElementById('explore-results').innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Search failed. Try again.</div>';
+  });
 }
 
 function renderExploreGrid() {
