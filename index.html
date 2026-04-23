@@ -981,11 +981,22 @@ function mergeServerProfile(local,server){
     joined:server.joined||local.joined||new Date().toISOString().slice(0,7)
   };
 }
+function categoryToType(cat){
+  var map={
+    'Faith & Prayer':'faith',
+    'Product Review':'product',
+    'Tips & Tricks':'tip',
+    'My Story':'story',
+    'Article':'article',
+    'Question':'question'
+  };
+  return map[cat]||'story';
+}
 function mapServerPost(sp){
   return{
     id:sp.id,
     userId:sp.user_id,
-    type:sp.type,
+    type:sp.type||categoryToType(sp.category),
     user:null,
     initials:'',
     av:'av-gold',
