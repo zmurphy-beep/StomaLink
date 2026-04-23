@@ -1460,11 +1460,6 @@ function renderStories(){
   var h='<div class="story-item" onclick="openCompose()">'
     +'<div class="story-ring"><div class="story-face" style="font-size:20px;font-weight:300;color:var(--bark);">+</div></div>'
     +'<span class="story-name">You</span></div>';
-  STORIES.forEach(function(s){
-    h+='<div class="story-item" onclick="showToast(\''+s.name+'\')">'
-      +'<div class="story-ring'+(s.live?' live':'')+'"><div class="story-face" style="'+s.style+'">'+s.initials+'</div></div>'
-      +'<span class="story-name">'+s.name+'</span></div>';
-  });
   b.innerHTML=h;
 }
 
