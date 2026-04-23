@@ -1396,7 +1396,6 @@ function onUserSignedIn(user){
 
   initUserSession();
   renderDaily();
-  renderStories();
   hideAuthScreen();
   clearAuthMsg();
   document.getElementById('auth-password').value='';
@@ -1448,14 +1447,6 @@ function renderDaily(){
     +'<div class="daily-verse">'+VERSE.text+'</div>'
     +'<div class="daily-ref">&#8212; '+VERSE.ref+'</div>'
     +'<div class="daily-prayer"><div class="prayer-label">Daily prayer</div><div class="prayer-text">'+PRAYER+'</div></div>';
-}
-
-function renderStories(){
-  var b=document.getElementById('stories-bar');
-  var h='<div class="story-item" onclick="openCompose()">'
-    +'<div class="story-ring"><div class="story-face" style="font-size:20px;font-weight:300;color:var(--bark);">+</div></div>'
-    +'<span class="story-name">You</span></div>';
-  b.innerHTML=h;
 }
 
 function renderFeed(filter){
