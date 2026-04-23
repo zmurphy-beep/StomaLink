@@ -1685,9 +1685,10 @@ function submitPost(){
       return {result:result, imageUrl:imageUrl};
     });
   });
-}).then(function(result){
-  if(!result||!result.data)return;
-
+;}).then(function(payload){
+  if(!payload||!payload.result||!payload.result.data)return;
+  var result=payload.result;
+  var imageUrl=payload.imageUrl;
   var created=result.data;
 
   var mapped={
