@@ -2203,6 +2203,44 @@ function loadMyFollowingCount() {
     });
 }
 
+function openFollowList(userId, type) {
+  document.getElementById('follow-list-title').textContent = type === 'followers' ? 'Followers' : 'Following';
+  document.getElementById('follow-list-content').innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Loading...</div>';
+  document.getElementById('follow-list-modal').classList.add('open');
+
+  var query = type === 'followers'
+    ? window.sb.from('follows').select('follower_id').eq('following_id', userId)
+    : window.sb.from('follows').select('following_id').eq('follower_id', userId);
+
+  query.then(function(r) {
+    var ids = (r.data || []).map(function(x) {
+      return type === 'followers' ? x.follower_id : x.following_id;
+    });
+    if (!ids.length) {
+      document.getElementById('follow-list-content').innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);font-size:14px;">No ' + type + ' yet.</div>';
+      return;
+    }
+    return window.sb.from('profiles').select('id,name,handle,avatar').in('id', ids);
+  }).then(function(r) {
+    if (!r) return;
+    var users = r.data || [];
+    var html = users.map(function(u) {
+      var avStyle = u.avatar ? 'background-image:url(\'' + escapeAttr(u.avatar) + '\');' : '';
+      return '<div class="follow-list-item" onclick="closeFollowList();openUserProfile(\'' + escapeAttr(u.id) + '\')">'
+        + '<div class="follow-list-av" style="' + avStyle + '">' + (u.avatar ? '' : escapeHtml(initials(u.name))) + '</div>'
+        + '<div><div class="follow-list-name">' + escapeHtml(u.name || 'StomaLink user') + '</div>'
+        + '<div class="follow-list-handle">' + escapeHtml(u.handle || '') + '</div></div>'
+        + '</div>';
+    }).join('');
+    document.getElementById('follow-list-content').innerHTML = html;
+  }).catch(function() {
+    document.getElementById('follow-list-content').innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Could not load list.</div>';
+  });
+}
+
+function closeFollowList() {
+  document.getElementById('follow-list-modal').classList.remove('open');
+}
 function showToast(msg){
   var el=document.getElementById('toast-el');
   el.textContent=msg;el.classList.add('show');
