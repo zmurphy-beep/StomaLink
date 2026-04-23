@@ -1679,9 +1679,11 @@ function submitPost(){
       return window.sb.storage.from('post-images').getPublicUrl(filename).data.publicUrl;
     });
   }
-  return imageUploadPromise.then(function(imageUrl){
+    return imageUploadPromise.then(function(imageUrl){
     if(imageUrl)insertPayload.image_url=imageUrl;
-    return window.sb.from('posts').insert(insertPayload).select().single();
+    return window.sb.from('posts').insert(insertPayload).select().single().then(function(result){
+      return {result:result, imageUrl:imageUrl};
+    });
   });
 }).then(function(result){
   if(!result||!result.data)return;
