@@ -1214,7 +1214,7 @@ function mapServerPost(sp){
     sub:'',
     time:formatRelativeTime(sp.created_at),
     body:sp.body||'',
-    image:sp.image||null,
+    image:sp.image_url||sp.image||null,
     link:sp.link||null,
     likes:Number(sp.likes)||0,
     liked:false,
