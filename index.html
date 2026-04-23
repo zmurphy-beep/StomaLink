@@ -1694,7 +1694,7 @@ function submitPost(){
   var mapped={
     id:created.id,
     userId:created.user_id,
-    type:selectedType,
+    type:savedSelectedType||categoryToType(created.category),
     user:PROFILE.name||'You',
     initials:initials(PROFILE.name),
     avatarImg:PROFILE.avatar||null,
