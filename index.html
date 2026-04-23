@@ -2327,6 +2327,69 @@ function loadMyFollowingCount() {
     });
 }
 
+function navToSettings(){navTo('settings');}
+
+function showChangeEmail(){
+  document.getElementById('new-email-input').value='';
+  document.getElementById('change-email-modal').classList.add('open');
+}
+function closeChangeEmail(){document.getElementById('change-email-modal').classList.remove('open');}
+async function saveNewEmail(){
+  var email=document.getElementById('new-email-input').value.trim();
+  if(!email){showToast('Please enter an email');return;}
+  var r=await window.sb.auth.updateUser({email:email});
+  if(r.error){showToast(r.error.message);}
+  else{showToast('Check your new email to confirm the change');closeChangeEmail();}
+}
+
+function showChangePassword(){
+  document.getElementById('new-password-input').value='';
+  document.getElementById('confirm-password-input').value='';
+  document.getElementById('change-password-modal').classList.add('open');
+}
+function closeChangePassword(){document.getElementById('change-password-modal').classList.remove('open');}
+async function saveNewPassword(){
+  var p1=document.getElementById('new-password-input').value;
+  var p2=document.getElementById('confirm-password-input').value;
+  if(!p1||p1.length<8){showToast('Password must be at least 8 characters');return;}
+  if(p1!==p2){showToast('Passwords do not match');return;}
+  var r=await window.sb.auth.updateUser({password:p1});
+  if(r.error){showToast(r.error.message);}
+  else{showToast('Password updated!');closeChangePassword();}
+}
+
+var SETTINGS={notifications:true,followerNotif:true,privateAccount:false};
+function toggleNotifications(){
+  SETTINGS.notifications=!SETTINGS.notifications;
+  var el=document.getElementById('notif-toggle');
+  var thumb=document.getElementById('notif-thumb');
+  el.style.background=SETTINGS.notifications?'var(--sage)':'var(--stone)';
+  thumb.style.left=SETTINGS.notifications?'21px':'3px';
+  showToast(SETTINGS.notifications?'Notifications on':'Notifications off');
+}
+function toggleFollowerNotif(){
+  SETTINGS.followerNotif=!SETTINGS.followerNotif;
+  var el=document.getElementById('follower-notif-toggle');
+  var thumb=document.getElementById('follower-notif-thumb');
+  el.style.background=SETTINGS.followerNotif?'var(--sage)':'var(--stone)';
+  thumb.style.left=SETTINGS.followerNotif?'21px':'3px';
+  showToast(SETTINGS.followerNotif?'Follower notifications on':'Follower notifications off');
+}
+function togglePrivacy(){
+  SETTINGS.privateAccount=!SETTINGS.privateAccount;
+  var el=document.getElementById('privacy-toggle');
+  var thumb=document.getElementById('privacy-thumb');
+  el.style.background=SETTINGS.privateAccount?'var(--sage)':'var(--stone)';
+  thumb.style.left=SETTINGS.privateAccount?'21px':'3px';
+  showToast(SETTINGS.privateAccount?'Account set to private':'Account set to public');
+}
+
+function confirmDeleteAccount(){
+  if(confirm('Are you sure you want to delete your account? This cannot be undone.')){
+    showToast('Please contact zmurphy@gutsycare.com to delete your account.');
+  }
+}
+
 function openFollowList(userId, type) {
   document.getElementById('follow-list-title').textContent = type === 'followers' ? 'Followers' : 'Following';
   document.getElementById('follow-list-content').innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Loading...</div>';
