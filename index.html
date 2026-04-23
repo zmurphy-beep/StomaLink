@@ -1520,7 +1520,7 @@ function buildPost(p){
     +'<button class="act" onclick="openComments(\''+pidAttr+'\')"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>'+p.comments.length+'</span></button>'
     +'<div class="act-spacer"></div>'
     +(p.ownedByMe?'<button class="act" style="color:var(--rust);" onclick="deletePost(\''+pidAttr+'\')"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>':'')
-    +'<button class="act" onclick="copyLink(\''+pidAttr+'\')">
+        +'<button class="act" onclick="copyLink(\''+pidAttr+'\')"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>'
     +'</div>';
 }
 
