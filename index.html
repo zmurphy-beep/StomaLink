@@ -1467,6 +1467,7 @@ function submitPost(){
   console.error('POST ERROR:', err);
   showToast(err&&err.message ? err.message : 'Post failed: '+JSON.stringify(err));
 });
+}
 
 function filterAndGo(type){navTo('home');renderFeed(type);}
 function doSearch(q) {
