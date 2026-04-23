@@ -1638,92 +1638,89 @@ function submitPost(){
   var link=document.getElementById('compose-link').value.trim();
   if(!selectedType){showToast('Please pick a category');return;}
   if(!text&&!composeImage){showToast('Please write something or add a photo');return;}
-  var payload={type:selectedType,body:text||'',image:composeImage||null,link:null};
-  if(selectedType==='article'&&link){payload.link={title:text||link,url:link};payload.body='';}
+  var savedSelectedType=selectedType;
+  var savedComposeImage=composeImage;
+  var payload={type:savedSelectedType,body:text||'',image:savedComposeImage||null,link:null};
+  if(savedSelectedType==='article'&&link){payload.link={title:text||link,url:link};payload.body='';}
   var tempId='temp-'+Date.now();
-    var optimistic={id:tempId,userId:CURRENT_USER?CURRENT_USER.id:null,type:savedSelectedType,
+  var optimistic={id:tempId,userId:CURRENT_USER?CURRENT_USER.id:null,type:savedSelectedType,
+    user:PROFILE.name||'You',initials:initials(PROFILE.name),
     av:'av-gold',avatarImg:PROFILE.avatar||null,sub:PROFILE.headline||'',time:'Just now',
-    body:payload.body||null,likes:0,liked:false,comments:[],image:composeImage||null,link:payload.link||null,ownedByMe:true,_pending:true};
+    body:payload.body||null,likes:0,liked:false,comments:[],image:savedComposeImage||null,link:payload.link||null,ownedByMe:true,_pending:true};
   POSTS.unshift(optimistic);USER_POSTS.unshift(optimistic);
   saveUserPosts();
-      var savedComposeImage=composeImage;
-  var savedSelectedType=selectedType;
   closeCompose();navTo('home');renderFeed(null);renderProfile();
- window.sb.auth.getUser().then(function(res){
-  var user=res&&res.data&&res.data.user;
-  if(!user){showToast('Please log in again to post');return;}
-
-  var categoryMap={
-    faith:'Faith & Prayer',
-    product:'Product Review',
-    tip:'Tips & Tricks',
-    story:'My Story',
-    article:'Article',
-    question:'Question'
-  };
-
+  window.sb.auth.getUser().then(function(res){
+    var user=res&&res.data&&res.data.user;
+    if(!user){showToast('Please log in again to post');return;}
+    var categoryMap={
+      faith:'Faith & Prayer',
+      product:'Product Review',
+      tip:'Tips & Tricks',
+      story:'My Story',
+      article:'Article',
+      question:'Question'
+    };
     var insertPayload={
-    user_id:user.id,
-        category:categoryMap[savedSelectedType]||'My Story',
-    body:payload.body||'',
-    article_url:payload.link&&payload.link.url ? payload.link.url : null
-  };
-  var imageUploadPromise=Promise.resolve(null);
+      user_id:user.id,
+      category:categoryMap[savedSelectedType]||'My Story',
+      body:payload.body||'',
+      article_url:payload.link&&payload.link.url?payload.link.url:null
+    };
+    var imageUploadPromise=Promise.resolve(null);
     if(savedComposeImage&&savedComposeImage.startsWith('data:')){
-    var blob=dataURLtoBlob(savedComposeImage);
-        var filename=user.id+'/'+Date.now()+'.jpg';
-    imageUploadPromise=window.sb.storage.from('post-images').upload(filename,blob,{
-      contentType:'image/jpeg',upsert:false
+      var blob=dataURLtoBlob(savedComposeImage);
+      var filename=user.id+'/'+Date.now()+'.jpg';
+      imageUploadPromise=window.sb.storage.from('post-images').upload(filename,blob,{
+        contentType:'image/jpeg',upsert:false
       }).then(function(r){
-      if(r.error){showToast('Image upload failed: '+r.error.message);return null;}
-      return window.sb.storage.from('post-images').getPublicUrl(filename).data.publicUrl;
-    });
-  }
+        if(r.error){showToast('Image upload failed: '+r.error.message);return null;}
+        return window.sb.storage.from('post-images').getPublicUrl(filename).data.publicUrl;
+      });
+    }
     return imageUploadPromise.then(function(imageUrl){
-    if(imageUrl)insertPayload.image_url=imageUrl;
-    return window.sb.from('posts').insert(insertPayload).select().single().then(function(result){
-      return {result:result, imageUrl:imageUrl};
+      if(imageUrl)insertPayload.image_url=imageUrl;
+      return window.sb.from('posts').insert(insertPayload).select().single().then(function(result){
+        return{result:result,imageUrl:imageUrl};
+      });
     });
+  }).then(function(payload){
+    if(!payload||!payload.result||!payload.result.data)return;
+    var result=payload.result;
+    var imageUrl=payload.imageUrl;
+    var created=result.data;
+    var mapped={
+      id:created.id,
+      userId:created.user_id,
+      type:savedSelectedType||categoryToType(created.category),
+      user:PROFILE.name||'You',
+      initials:initials(PROFILE.name),
+      avatarImg:PROFILE.avatar||null,
+      av:'av-gold',
+      sub:PROFILE.headline||'',
+      time:'Just now',
+      body:created.body||null,
+      likes:0,
+      liked:false,
+      comments:[],
+      image:imageUrl||null,
+      link:created.article_url?{title:created.article_url,url:created.article_url}:null,
+      ownedByMe:true,
+      _server:true,
+      _createdAt:created.created_at
+    };
+    USER_POSTS=USER_POSTS.filter(function(p){return p.id!==tempId;});
+    USER_POSTS.unshift(mapped);
+    POSTS_API.unshift(mapped);
+    saveUserPosts();
+    rebuildFeed();
+    renderFeed(activeFilter);
+    renderProfile();
+    showToast('Posted! Your community thanks you.');
+  }).catch(function(err){
+    console.error('POST ERROR:',err);
+    showToast(err&&err.message?err.message:'Post failed');
   });
-;}).then(function(payload){
-  if(!payload||!payload.result||!payload.result.data)return;
-  var result=payload.result;
-  var imageUrl=payload.imageUrl;
-  var created=result.data;
-
-  var mapped={
-    id:created.id,
-    userId:created.user_id,
-    type:savedSelectedType||categoryToType(created.category),
-    user:PROFILE.name||'You',
-    initials:initials(PROFILE.name),
-    avatarImg:PROFILE.avatar||null,
-    av:'av-gold',
-    sub:PROFILE.headline||'',
-    time:'Just now',
-    body:created.body||null,
-    likes:0,
-    liked:false,
-    comments:[],
-        image:imageUrl||null,
-    link:created.article_url ? {title:created.article_url,url:created.article_url} : null,
-    ownedByMe:true,
-    _server:true,
-    _createdAt:created.created_at
-  };
-
-  USER_POSTS=USER_POSTS.filter(function(p){return p.id!==tempId;});
-  USER_POSTS.unshift(mapped);
-  POSTS_API.unshift(mapped);
-  saveUserPosts();
-  rebuildFeed();
-  renderFeed(activeFilter);
-  renderProfile();
-  showToast('Posted! Your community thanks you.');
-}).catch(function(err){
-  console.error('POST ERROR:', err);
-  showToast(err&&err.message ? err.message : 'Post failed: '+JSON.stringify(err));
-});
 }
 
 function filterAndGo(type){navTo('home');renderFeed(type);}
