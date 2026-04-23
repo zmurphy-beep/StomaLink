@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -615,6 +615,55 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
       <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="handleAvatarUpload(event)"/>
       <input type="file" id="cover-upload" accept="image/*" style="display:none;" onchange="handleCoverUpload(event)"/>
     </div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="user-page-topbar">
+    <button class="user-back-btn" onclick="navTo('settings')" aria-label="Back">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="user-page-title">About StomaLink</div>
+  </div>
+  <div style="overflow-y:auto;flex:1;background:var(--cream);">
+    <div style="background:var(--deep);padding:32px 24px;text-align:center;">
+      <div style="font-size:28px;font-weight:700;color:var(--cream);margin-bottom:4px;">stoma<span style="color:var(--gold);">link</span></div>
+      <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(212,168,67,0.7);">Community · Faith · Strength</div>
+    </div>
+    <div style="padding:20px 16px;display:flex;flex-direction:column;gap:12px;">
+      <div class="about-card">
+        <h5>Our story</h5>
+        <p>StomaLink by Gutsy LLC was created to connect and support people living with ostomies and digestive conditions through real experiences, reliable guidance, and a community that ensures no one has to face it alone. The idea came from firsthand experience—after a severe diverticulitis flare led to emergency surgery, complications, and months living with an ileostomy, the reality of daily challenges, isolation, and uncertainty became clear. What made the difference was having support, people willing to help, and access to real-world advice. StomaLink exists to bring that same level of support to others—offering a place to share experiences, find practical solutions, and build connections with people who truly understand. The goal is simple: reach those going through similar struggles and help them navigate their journey with strength, confidence, and the support they deserve.</p>
+      </div>
+      <div class="about-card">
+        <h5>Built by</h5>
+        <div class="about-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Zach Murphy — Founder
+        </div>
+        <div class="about-row">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          zmurphy@gutsycare.com
+        </div>
+      </div>
+      <div class="about-card">
+        <h5>Contact us</h5>
+        <p>Have a question, concern, or want to get involved? We'd love to hear from you.</p>
+        <button class="btn-primary" style="margin-top:14px;" onclick="navTo('support')">Send a message</button>
+      </div>
+      <div class="about-card">
+        <h5>Privacy policy</h5>
+        <p>StomaLink is committed to protecting your privacy. We collect only the information necessary to provide our services. Your personal health information is never sold or shared with third parties. All support messages are handled with complete confidentiality.</p>
+      </div>
+      <div class="about-card">
+        <h5>Terms of use</h5>
+        <p>By using StomaLink you agree to treat all community members with respect and compassion. Content that is harmful, hateful, or medically misleading will be removed. StomaLink is a community platform and does not provide medical advice — always consult your healthcare provider.</p>
+      </div>
+      <div class="about-card" style="text-align:center;">
+        <p style="font-size:12px;color:var(--bark);">StomaLink v2.0 · Made with faith &amp; love<br/>© 2026 Gutsy Care LLC</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- SETTINGS -->
 <div class="page" id="page-settings">
