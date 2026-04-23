@@ -1053,49 +1053,12 @@ var VERSE=VERSES[D%VERSES.length];
 var PRAYER=PRAYERS[D%PRAYERS.length];
 
 // Seed posts — gives the feed life on day one
-var POSTS=[
-  {id:1,type:'story',user:'Margaret T.',initials:'MT',av:'av-earth',sub:'Colostomy · 3 years',time:'2 days ago',likes:24,liked:false,
-   body:'Three years post-surgery and I just ran a 5K. When I was in the hospital I couldn\'t imagine getting out of bed. If you\'re newly diagnosed and reading this — it gets better. So much better. You are still you.',
-   comments:[
-     {user:'David K.',initials:'DK',av:'av-sage',text:'This is exactly what I needed to read today. Thank you Margaret.',time:'1 day ago'},
-     {user:'StomaLink',initials:'SL',av:'av-deep',text:'What an inspiration. We are so proud of you! 🙌',time:'1 day ago'}
-   ]},
-  {id:2,type:'tip',user:'James R.',initials:'JR',av:'av-sky',sub:'Ileostomy · 18 months',time:'3 days ago',likes:31,liked:false,
-   body:'Hot tip for summer: keep a small cooler bag in your car with extra supplies, a few wet wipes, and a change of clothes. I got caught off guard once at a work event — never again. Preparation is everything.',
-   comments:[
-     {user:'Sarah M.',initials:'SM',av:'av-teal',text:'Adding the cooler bag idea right now. Genius.',time:'2 days ago'}
-   ]},
-  {id:3,type:'product',user:'Linda C.',initials:'LC',av:'av-rust',sub:'Urostomy · 5 years',time:'4 days ago',likes:18,liked:false,
-   body:'After trying six different barrier rings, Hollister CeraRing is the one. No leaks for 4 days straight and it doesn\'t irritate my skin at all. Worth every penny — ask your supplier about samples first.',
-   comments:[]},
-  {id:4,type:'question',user:'NewToThis_2024',initials:'NT',av:'av-purple',sub:'',time:'5 days ago',likes:9,liked:false,
-   body:'Just got home from my reversal surgery consult and the doctor said I may not be a candidate. I\'m feeling really lost. Has anyone else been through this? How did you process it?',
-   comments:[
-     {user:'Margaret T.',initials:'MT',av:'av-earth',text:'Sending you so much love. The grief of that news is real. Please feel free to DM me anytime.',time:'4 days ago'},
-     {user:'Pastor Greg',initials:'PG',av:'av-gold',text:'You are not defined by this outcome. You are whole, loved, and walking a path that has purpose. We are here for you.',time:'4 days ago'}
-   ]},
-  {id:5,type:'article',user:'StomaLink',initials:'SL',av:'av-deep',sub:'Official',time:'1 week ago',likes:42,liked:false,
-   link:{title:'Living Fully with an Ostomy — UOAA Guide',url:'https://www.ostomy.org/living-with-an-ostomy/'},
-   comments:[]},
-  {id:6,type:'faith',user:'Pastor Greg',initials:'PG',av:'av-gold',sub:'Community chaplain',time:'1 week ago',likes:55,liked:false,
-   body:null,comments:[
-     {user:'Linda C.',initials:'LC',av:'av-rust',text:'This verse has gotten me through so many hard mornings. Thank you Pastor Greg.',time:'6 days ago'}
-   ]},
-];
-
-var STORIES=[
-  {name:'Margaret',initials:'MT',style:'background:#EDE0CC;color:#5C4A32;',live:true},
-  {name:'James',initials:'JR',style:'background:#D5E5F0;color:#1A3A5A;',live:false},
-  {name:'Linda',initials:'LC',style:'background:#F5DDD5;color:#8B3520;',live:false},
-  {name:'Pastor G.',initials:'PG',style:'background:#F5EAD0;color:#5A3A0A;',live:false},
-  {name:'Sarah',initials:'SM',style:'background:#D5EDE8;color:#1A4A3A;',live:false},
-];
 
 var activeFilter=null,selectedType='',commentPostId=null,toastTimer=null,composeImage=null,activeProfTab='posts';
 
 var CURRENT_USER=null;
 var authMode='login';
-var POSTS_SEED=POSTS.slice();
+var POSTS_SEED=[];
 var POSTS_API=[];
 var PROFILE=emptyProfile();
 var USER_POSTS=[];
