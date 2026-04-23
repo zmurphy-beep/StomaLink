@@ -1668,8 +1668,8 @@ function submitPost(){
     article_url:payload.link&&payload.link.url ? payload.link.url : null
   };
   var imageUploadPromise=Promise.resolve(null);
-  if(composeImage&&composeImage.startsWith('data:')){
-    var blob=dataURLtoBlob(composeImage);
+    if(savedComposeImage&&savedComposeImage.startsWith('data:')){
+    var blob=dataURLtoBlob(savedComposeImage);
     var filename=user.id+'/'+Date.now()+'.jpg';
     imageUploadPromise=window.sb.storage.from('post-images').upload(filename,blob,{
       contentType:'image/jpeg',upsert:false
