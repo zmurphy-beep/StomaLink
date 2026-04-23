@@ -804,6 +804,19 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
     </div>
   </div>
 
+<div class="modal-bg" id="follow-list-modal" onclick="if(event.target===this)closeFollowList()">
+  <div class="modal-sheet" style="max-height:80vh;">
+    <div class="modal-handle"></div>
+    <div class="modal-hdr">
+      <div class="modal-title" id="follow-list-title">Followers</div>
+      <button class="modal-close" onclick="closeFollowList()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="follow-list-content" style="padding:0 4px;"></div>
+  </div>
+</div>
+
   <div class="toast" id="toast-el"></div>
 </div>
 
