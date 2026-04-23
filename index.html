@@ -1646,7 +1646,8 @@ function submitPost(){
     body:payload.body||null,likes:0,liked:false,comments:[],image:composeImage||null,link:payload.link||null,ownedByMe:true,_pending:true};
   POSTS.unshift(optimistic);USER_POSTS.unshift(optimistic);
   saveUserPosts();
-    var savedComposeImage=composeImage;
+      var savedComposeImage=composeImage;
+  var savedSelectedType=selectedType;
   closeCompose();navTo('home');renderFeed(null);renderProfile();
  window.sb.auth.getUser().then(function(res){
   var user=res&&res.data&&res.data.user;
