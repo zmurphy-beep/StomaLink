@@ -984,23 +984,23 @@ function mergeServerProfile(local,server){
 function mapServerPost(sp){
   return{
     id:sp.id,
-    userId:sp.userId,
+    userId:sp.user_id,
     type:sp.type,
     user:null,
     initials:'',
     av:'av-gold',
     avatarImg:null,
     sub:'',
-    time:formatRelativeTime(sp.createdAt),
+    time:formatRelativeTime(sp.created_at),
     body:sp.body||'',
     image:sp.image||null,
     link:sp.link||null,
     likes:Number(sp.likes)||0,
     liked:false,
     comments:Array.isArray(sp.comments)?sp.comments:[],
-    ownedByMe:!!(CURRENT_USER&&sp.userId===CURRENT_USER.id),
+    ownedByMe:!!(CURRENT_USER&&sp.user_id===CURRENT_USER.id),
     _server:true,
-    _createdAt:sp.createdAt||null
+    _createdAt:sp.created_at||null
   };
 }
 function rebuildFeed(){
