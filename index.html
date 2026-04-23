@@ -1664,7 +1664,7 @@ function submitPost(){
 
     var insertPayload={
     user_id:user.id,
-    category:categoryMap[selectedType]||'My Story',
+        category:categoryMap[savedSelectedType]||'My Story',
     body:payload.body||'',
     article_url:payload.link&&payload.link.url ? payload.link.url : null
   };
