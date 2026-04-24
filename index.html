@@ -2562,50 +2562,29 @@ function loadArticles(){
   resultsEl=document.getElementById('explore-results');
   if(grid)grid.style.display='none';
   if(secHdr)secHdr.style.display='none';
-  resultsEl.innerHTML='<div style="text-align:center;padding:32px;color:var(--bark);">Loading articles...</div>';
-  var feeds=[
-    'https://www.uoaa.org/feed/',
-    'https://veganostomy.ca/feed/',
-    'https://ostomyconnection.com/feed/'
+  var articles=[
+    {source:'UOAA',title:'Living with an Ostomy — Complete Guide',url:'https://www.ostomy.org/living-with-an-ostomy/'},
+    {source:'UOAA',title:'Ostomy Nutrition Guide',url:'https://www.ostomy.org/ostomy-nutrition-guide/'},
+    {source:'UOAA',title:'Intimacy & Relationships with an Ostomy',url:'https://www.ostomy.org/intimacy-sexuality-and-gender/'},
+    {source:'UOAA',title:'Traveling with an Ostomy',url:'https://www.ostomy.org/traveling-with-an-ostomy/'},
+    {source:'UOAA',title:'Returning to Work & Sports',url:'https://www.ostomy.org/sports-and-physical-activities/'},
+    {source:'Vegan Ostomy',title:'Ostomy Bag Leaks — Causes & Solutions',url:'https://www.veganostomy.ca/ostomy-bag-leaks/'},
+    {source:'Vegan Ostomy',title:'Ostomy Supplies Guide for Beginners',url:'https://www.veganostomy.ca/ostomy-supplies/'},
+    {source:'Colostomy UK',title:'Colostomy Care Tips & Advice',url:'https://www.colostomyuk.org/information/'},
+    {source:'Mayo Clinic',title:'Colostomy — What to Expect',url:'https://www.mayoclinic.org/tests-procedures/colostomy/about/pac-20385082'},
+    {source:'Mayo Clinic',title:'Ileostomy — Overview & Care',url:'https://www.mayoclinic.org/tests-procedures/ileostomy/about/pac-20385055'},
+    {source:'Healthline',title:'Life After Ostomy Surgery',url:'https://www.healthline.com/health/ostomy'},
+    {source:'Healthline',title:'Ostomy Diet: Foods to Eat & Avoid',url:'https://www.healthline.com/health/ostomy-diet'},
   ];
-  var allItems=[];
-  var loaded=0;
-  feeds.forEach(function(url){
-    fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url))
-      .then(function(r){return r.json();})
-      .then(function(data){
-        if(data.items){
-          data.items.slice(0,5).forEach(function(item){
-            allItems.push({
-              title:item.title,
-              url:item.link,
-              source:data.feed.title||'Article',
-              date:item.pubDate?new Date(item.pubDate).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):''
-            });
-          });
-        }
-      })
-      .catch(function(){})
-      .finally(function(){
-        loaded++;
-        if(loaded===feeds.length){
-          if(!allItems.length){
-            resultsEl.innerHTML='<div style="text-align:center;padding:48px 20px;color:var(--bark);font-size:14px;">No articles found. Try again later.</div>';
-            return;
-          }
-          var html='<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);padding:16px 0 10px;">Articles & Resources</div>';
-          html+='<button onclick="renderExploreGrid()" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--bark);font-size:13px;cursor:pointer;font-family:Sora,sans-serif;margin-bottom:12px;">← Back</button>';
-          allItems.forEach(function(item){
-            html+='<a href="'+escapeAttr(item.url)+'" target="_blank" rel="noopener noreferrer" style="display:block;background:#fff;border:1px solid var(--stone);border-radius:16px;padding:14px 16px;margin-bottom:10px;text-decoration:none;">'
-              +'<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--bark);margin-bottom:6px;">'+escapeHtml(item.source)+'</div>'
-              +'<div style="font-size:14px;font-weight:600;color:var(--sky);line-height:1.4;margin-bottom:6px;">'+escapeHtml(item.title)+'</div>'
-              +'<div style="font-size:11px;color:var(--bark);">'+escapeHtml(item.date)+'</div>'
-              +'</a>';
-          });
-          resultsEl.innerHTML=html;
-        }
-      });
+  var html='<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);padding:16px 0 10px;">Articles & Resources</div>';
+  html+='<button onclick="renderExploreGrid()" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--bark);font-size:13px;cursor:pointer;font-family:Sora,sans-serif;margin-bottom:12px;">← Back</button>';
+  articles.forEach(function(item){
+    html+='<a href="'+escapeAttr(item.url)+'" target="_blank" rel="noopener noreferrer" style="display:block;background:#fff;border:1px solid var(--stone);border-radius:16px;padding:14px 16px;margin-bottom:10px;text-decoration:none;">'
+      +'<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--bark);margin-bottom:6px;">'+escapeHtml(item.source)+'</div>'
+      +'<div style="font-size:14px;font-weight:600;color:var(--sky);line-height:1.4;">'+escapeHtml(item.title)+'</div>'
+      +'</a>';
   });
+  resultsEl.innerHTML=html;
 }
 function showToast(msg){
   var el=document.getElementById('toast-el');
