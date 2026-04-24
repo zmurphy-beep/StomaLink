@@ -495,7 +495,7 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
           <div class="ex-tile-label" style="color:#5A2010;">Product reviews</div>
           <div class="ex-tile-sub" style="color:#8B4030;">What actually works</div>
         </div>
-        <div class="ex-tile tile-article" onclick="filterAndGo('article')">
+          <div class="ex-tile tile-article" onclick="loadArticles()">
           <svg fill="none" stroke="#1A3A5A" stroke-width="1.8" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           <div class="ex-tile-label" style="color:#0A2A4A;">Articles</div>
           <div class="ex-tile-sub" style="color:#2A5A7A;">Links & resources</div>
@@ -2547,6 +2547,65 @@ function deletePost(id) {
 function toggleDailyPrayer(){
   var el=document.getElementById('daily-prayer-wrap');
   if(el)el.style.display=el.style.display==='none'?'block':'none';
+}
+function loadArticles(){
+  navTo('explore');
+  var grid=document.querySelector('.ex-grid');
+  var secHdr=document.querySelector('#page-explore .sec-hdr');
+  var resultsEl=document.getElementById('explore-results');
+  if(!resultsEl){
+    var div=document.createElement('div');
+    div.id='explore-results';
+    div.style.padding='0 16px 20px';
+    grid.parentNode.insertBefore(div,grid);
+  }
+  resultsEl=document.getElementById('explore-results');
+  if(grid)grid.style.display='none';
+  if(secHdr)secHdr.style.display='none';
+  resultsEl.innerHTML='<div style="text-align:center;padding:32px;color:var(--bark);">Loading articles...</div>';
+  var feeds=[
+    'https://www.ostomy.org/feed/',
+    'https://www.ostomylifestyle.org/feed/',
+    'https://www.veganostomy.ca/feed/'
+  ];
+  var allItems=[];
+  var loaded=0;
+  feeds.forEach(function(url){
+    fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(url))
+      .then(function(r){return r.json();})
+      .then(function(data){
+        if(data.items){
+          data.items.slice(0,5).forEach(function(item){
+            allItems.push({
+              title:item.title,
+              url:item.link,
+              source:data.feed.title||'Article',
+              date:item.pubDate?new Date(item.pubDate).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):''
+            });
+          });
+        }
+      })
+      .catch(function(){})
+      .finally(function(){
+        loaded++;
+        if(loaded===feeds.length){
+          if(!allItems.length){
+            resultsEl.innerHTML='<div style="text-align:center;padding:48px 20px;color:var(--bark);font-size:14px;">No articles found. Try again later.</div>';
+            return;
+          }
+          var html='<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);padding:16px 0 10px;">Articles & Resources</div>';
+          html+='<button onclick="renderExploreGrid()" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--bark);font-size:13px;cursor:pointer;font-family:Sora,sans-serif;margin-bottom:12px;">← Back</button>';
+          allItems.forEach(function(item){
+            html+='<a href="'+escapeAttr(item.url)+'" target="_blank" rel="noopener noreferrer" style="display:block;background:#fff;border:1px solid var(--stone);border-radius:16px;padding:14px 16px;margin-bottom:10px;text-decoration:none;">'
+              +'<div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--bark);margin-bottom:6px;">'+escapeHtml(item.source)+'</div>'
+              +'<div style="font-size:14px;font-weight:600;color:var(--sky);line-height:1.4;margin-bottom:6px;">'+escapeHtml(item.title)+'</div>'
+              +'<div style="font-size:11px;color:var(--bark);">'+escapeHtml(item.date)+'</div>'
+              +'</a>';
+          });
+          resultsEl.innerHTML=html;
+        }
+      });
+  });
 }
 function showToast(msg){
   var el=document.getElementById('toast-el');
