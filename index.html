@@ -1757,10 +1757,25 @@ function renderExploreGrid() {
 }
 
 function submitSupport(){
+  var name=document.getElementById('s-name').value.trim();
+  var email=document.getElementById('s-email').value.trim();
+  var topic=document.getElementById('s-topic').value;
   var msg=document.getElementById('s-msg').value.trim();
   if(!msg){showToast('Please write a message first');return;}
-  document.getElementById('sup-form').style.display='none';
-  document.getElementById('sup-success').style.display='block';
+  fetch('https://formspree.io/f/xrerrrlo',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({name:name,email:email,topic:topic,message:msg})
+  }).then(function(r){
+    if(r.ok){
+      document.getElementById('sup-form').style.display='none';
+      document.getElementById('sup-success').style.display='block';
+    } else {
+      showToast('Could not send message. Please try again.');
+    }
+  }).catch(function(){
+    showToast('Could not send message. Please try again.');
+  });
 }
 function renderProfile(){
   var avBig=document.getElementById('prof-av-big');
