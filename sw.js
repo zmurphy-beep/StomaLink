@@ -1,4 +1,4 @@
-const CACHE = 'stomalink-v4';
+const CACHE = 'stomalink-v3';
 const ASSETS = [
   '/',
   '/index.html',
