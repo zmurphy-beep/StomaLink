@@ -1753,7 +1753,7 @@ function renderExploreGrid() {
   var resultsEl = document.getElementById('explore-results');
   if (grid) grid.style.display = '';
   if (secHdr) secHdr.style.display = '';
-  if (resultsEl) resultsEl.innerHTML = '';
+    if (resultsEl) { resultsEl.innerHTML = ''; resultsEl.remove(); }
 }
 
 function submitSupport(){
