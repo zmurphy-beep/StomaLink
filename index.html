@@ -2558,10 +2558,11 @@ function loadArticles(){
     div.id='explore-results';
     div.style.padding='0 16px 20px';
     grid.parentNode.insertBefore(div,grid);
+    resultsEl=document.getElementById('explore-results');
   }
-  resultsEl=document.getElementById('explore-results');
   if(grid)grid.style.display='none';
   if(secHdr)secHdr.style.display='none';
+  resultsEl.innerHTML='';
   var articles=[
     {source:'UOAA',title:'Living with an Ostomy — Complete Guide',url:'https://www.ostomy.org/living-with-an-ostomy/'},
     {source:'UOAA',title:'Ostomy Nutrition Guide',url:'https://www.ostomy.org/ostomy-nutrition-guide/'},
