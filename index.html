@@ -2600,6 +2600,11 @@ if('serviceWorker' in navigator){
     navigator.serviceWorker.register('/sw.js').catch(function(){});
   });
 }
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.addEventListener('controllerchange', function(){
+    window.location.reload();
+  });
+}
 </script>
 </body>
 </html>
