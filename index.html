@@ -2596,8 +2596,8 @@ function showToast(msg){
 
 // Register service worker for PWA offline support
 if('serviceWorker' in navigator){
-  window.addEventListener('load',function(){
-    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  navigator.serviceWorker.getRegistrations().then(function(registrations){
+    registrations.forEach(function(r){r.unregister();});
   });
 }
 if('serviceWorker' in navigator){
