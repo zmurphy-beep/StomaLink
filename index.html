@@ -477,7 +477,7 @@ html,body{height:100%;font-family:'Sora',sans-serif;background:#1A1008;color:#2C
     <svg class="ex-search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     <input class="ex-input" id="ex-search-input" placeholder="Search people, posts, topics..."/>
   </div>
-  <button onclick="doSearch(document.getElementById('ex-search-input').value)" style="margin-top:10px;width:100%;padding:11px;background:var(--deep);color:var(--cream);border:none;border-radius:20px;font-size:14px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;">Search</button>
+  <button onclick="var q=document.getElementById('ex-search-input').value;showToast('Searching: '+q);doSearch(q);" style="margin-top:10px;width:100%;padding:11px;background:var(--deep);color:var(--cream);border:none;border-radius:20px;font-size:14px;font-weight:600;font-family:'Sora',sans-serif;cursor:pointer;">Search</button>
 </div>
       <div class="sec-hdr" style="padding-top:14px;"><span class="sec-title">Browse by category</span></div>
       <div class="ex-grid">
