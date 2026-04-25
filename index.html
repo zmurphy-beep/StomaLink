@@ -1698,21 +1698,24 @@ function doSearch(q) {
   }
   var resultsEl = document.getElementById('explore-results');
   resultsEl.innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Searching...</div>';
-
-  var isHashtag = q.startsWith('#');
-  var term = isHashtag ? q.slice(1) : q;
+  var term = q.startsWith('#') ? q.slice(1) : q;
 
   Promise.all([
     window.sb.from('profiles').select('id,name,handle,avatar,headline')
       .or('name.ilike.%' + term + '%,handle.ilike.%' + term + '%')
       .limit(5),
     window.sb.from('posts').select('*')
-      .or('body.ilike.%' + term + '%,category.ilike.%' + term + '%,article_url.ilike.%' + term + '%')
+      .or('body.ilike.%' + term + '%,category.ilike.%' + term + '%')
       .order('created_at', { ascending: false })
-      .limit(20)
+      .limit(10),
+    window.sb.from('articles').select('*')
+      .or('title.ilike.%' + term + '%,body.ilike.%' + term + '%,category.ilike.%' + term + '%,summary.ilike.%' + term + '%')
+      .order('created_at', { ascending: false })
+      .limit(10)
   ]).then(function(results) {
     var users = results[0].data || [];
     var posts = results[1].data || [];
+    var articles = results[2].data || [];
     var html = '';
 
     if (users.length) {
@@ -1732,6 +1735,13 @@ function doSearch(q) {
       });
     }
 
+    if (articles.length) {
+      html += '<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);padding:16px 0 10px;">Articles</div>';
+      articles.forEach(function(a) {
+        html += buildArticleCard(a);
+      });
+    }
+
     if (posts.length) {
       html += '<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--bark);padding:16px 0 10px;">Posts</div>';
       posts.forEach(function(sp) {
@@ -1747,12 +1757,12 @@ function doSearch(q) {
       });
     }
 
-    if (!users.length && !posts.length) {
+    if (!users.length && !articles.length && !posts.length) {
       html = '<div style="text-align:center;padding:48px 20px;color:var(--bark);font-size:14px;">No results for &ldquo;' + escapeHtml(q) + '&rdquo;</div>';
     }
 
     resultsEl.innerHTML = html;
-    }).catch(function() {
+  }).catch(function() {
     document.getElementById('explore-results').innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Search failed. Try again.</div>';
   });
 }
