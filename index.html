@@ -1768,16 +1768,18 @@ function doSearch(q) {
     return;
   }
   var searchWrap = document.getElementById('explore-results');
-  if (!searchWrap) {
-    var grid = document.querySelector('.ex-grid');
-    var secHdr = document.querySelector('#page-explore .sec-hdr');
-    var div = document.createElement('div');
-    div.id = 'explore-results';
-    div.style.padding = '0 16px 20px';
-    grid.parentNode.insertBefore(div, grid);
-    grid.style.display = 'none';
-    secHdr.style.display = 'none';
-  }
+if (!searchWrap) {
+  var grid = document.querySelector('.ex-grid');
+  var secHdr = document.querySelector('#page-explore .sec-hdr');
+  var div = document.createElement('div');
+  div.id = 'explore-results';
+  div.style.padding = '0 16px 20px';
+  grid.parentNode.insertBefore(div, grid);
+}
+var grid = document.querySelector('.ex-grid');
+var secHdr = document.querySelector('#page-explore .sec-hdr');
+if (grid) grid.style.display = 'none';
+if (secHdr) secHdr.style.display = 'none';
   var resultsEl = document.getElementById('explore-results');
   resultsEl.innerHTML = '<div style="text-align:center;padding:32px;color:var(--bark);">Searching...</div>';
   var term = q.startsWith('#') ? q.slice(1) : q;
