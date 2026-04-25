@@ -1477,6 +1477,31 @@ function renderFeed(filter){
 
 function clearFilter(){renderFeed(null);}
 
+function buildArticleCard(a) {
+  var catColors = {
+    'Practical': { bg: '#DCE8DC', text: '#2A5A2A' },
+    'Medical': { bg: '#D5E5F0', text: '#1A3A5A' },
+    'Conditions': { bg: '#F5DDD5', text: '#7A2A1A' },
+    'Faith': { bg: '#FDF3DC', text: '#7A5A1A' }
+  };
+  var cat = catColors[a.category] || { bg: 'var(--warm)', text: 'var(--earth)' };
+  var tagsHtml = '';
+  if (a.tags && a.tags.length) {
+    tagsHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">'
+      + a.tags.slice(0, 4).map(function(t) {
+          return '<span style="background:var(--warm);border:1px solid var(--stone);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:var(--bark);text-transform:uppercase;letter-spacing:0.5px;">' + escapeHtml(t) + '</span>';
+        }).join('')
+      + '</div>';
+  }
+  return '<div onclick="openArticle(\'' + escapeAttr(String(a.id)) + '\')" style="background:#fff;border:1px solid var(--stone);border-radius:18px;padding:16px;margin-bottom:10px;cursor:pointer;">'
+    + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">'
+    + '<span style="background:' + cat.bg + ';color:' + cat.text + ';font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;">' + escapeHtml(a.category || '') + '</span>'
+    + '</div>'
+    + '<div style="font-size:15px;font-weight:700;color:var(--deep);line-height:1.4;margin-bottom:6px;">' + escapeHtml(a.title) + '</div>'
+    + (a.summary ? '<div style="font-size:13px;color:var(--earth);line-height:1.55;">' + escapeHtml(a.summary) + '</div>' : '')
+    + tagsHtml
+    + '</div>';
+}
 function buildPost(p){
   var tagClass={faith:'ptag-faith',tip:'ptag-tip',product:'ptag-product',article:'ptag-article',story:'ptag-story',question:'ptag-question'};
   var tagLabel={faith:'Faith',tip:'Tip',product:'Product rec',article:'Article',story:'Story',question:'Question'};
