@@ -1502,6 +1502,63 @@ function buildArticleCard(a) {
     + tagsHtml
     + '</div>';
 }
+function openArticle(id) {
+  window.sb.from('articles').select('*').eq('id', id).single()
+    .then(function(r) {
+      var a = r.data;
+      if (!a) return;
+      var catColors = {
+        'Practical': { bg: '#DCE8DC', text: '#2A5A2A' },
+        'Medical': { bg: '#D5E5F0', text: '#1A3A5A' },
+        'Conditions': { bg: '#F5DDD5', text: '#7A2A1A' },
+        'Faith': { bg: '#FDF3DC', text: '#7A5A1A' }
+      };
+      var cat = catColors[a.category] || { bg: 'var(--warm)', text: 'var(--earth)' };
+      var grid = document.querySelector('.ex-grid');
+      var secHdr = document.querySelector('#page-explore .sec-hdr');
+      var resultsEl = document.getElementById('explore-results');
+      if (!resultsEl) {
+        var div = document.createElement('div');
+        div.id = 'explore-results';
+        div.style.padding = '0 16px 20px';
+        grid.parentNode.insertBefore(div, grid);
+        resultsEl = document.getElementById('explore-results');
+      }
+      if (grid) grid.style.display = 'none';
+      if (secHdr) secHdr.style.display = 'none';
+
+      var tagsHtml = '';
+      if (a.tags && a.tags.length) {
+        tagsHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;">'
+          + a.tags.map(function(t) {
+              return '<span style="background:var(--warm);border:1px solid var(--stone);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:600;color:var(--bark);text-transform:uppercase;letter-spacing:0.5px;">' + escapeHtml(t) + '</span>';
+            }).join('')
+          + '</div>';
+      }
+
+      var paragraphs = (a.body || '').split('\n').filter(function(p) { return p.trim(); });
+      var bodyHtml = paragraphs.map(function(p) {
+        return '<p style="font-size:15px;line-height:1.75;color:var(--deep);margin-bottom:14px;">' + escapeHtml(p) + '</p>';
+      }).join('');
+
+      resultsEl.innerHTML =
+        '<button onclick="loadArticles()" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--bark);font-size:13px;cursor:pointer;font-family:Sora,sans-serif;margin-bottom:16px;">← All Articles</button>'
+        + '<div style="background:#fff;border:1px solid var(--stone);border-radius:20px;padding:20px;margin-bottom:20px;">'
+        + '<span style="background:' + cat.bg + ';color:' + cat.text + ';font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:12px;">' + escapeHtml(a.category || '') + '</span>'
+        + '<h2 style="font-size:20px;font-weight:700;color:var(--deep);line-height:1.35;margin-bottom:10px;">' + escapeHtml(a.title) + '</h2>'
+        + (a.summary ? '<p style="font-size:14px;color:var(--bark);line-height:1.6;margin-bottom:16px;font-style:italic;">' + escapeHtml(a.summary) + '</p>' : '')
+        + '<div style="border-top:1px solid var(--warm);margin-bottom:16px;"></div>'
+        + bodyHtml
+        + tagsHtml
+        + '<div style="margin-top:20px;padding:12px 14px;background:var(--warm);border-radius:12px;border:1px solid var(--stone);">'
+        + '<div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--bark);margin-bottom:4px;">Medical disclaimer</div>'
+        + '<div style="font-size:12px;color:var(--bark);line-height:1.5;">This article is for informational and community support purposes only. It does not constitute medical advice. Always consult your healthcare provider or WOCN for personalized guidance.</div>'
+        + '</div>'
+        + '</div>';
+    }).catch(function() {
+      showToast('Could not load article');
+    });
+}
 function buildPost(p){
   var tagClass={faith:'ptag-faith',tip:'ptag-tip',product:'ptag-product',article:'ptag-article',story:'ptag-story',question:'ptag-question'};
   var tagLabel={faith:'Faith',tip:'Tip',product:'Product rec',article:'Article',story:'Story',question:'Question'};
